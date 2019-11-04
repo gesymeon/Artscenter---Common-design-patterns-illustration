@@ -3,14 +3,14 @@ package artsCenter;
 
 import java.io.Serializable;
 
-public class LuxuriousSeat extends Seat implements Serializable {
+public class LuxuriousSeat extends Seat implements Serializable{
 
-	private static final long serialVersionUID = 444260795205856537L;
+	private static final long serialVersionUID = 2715665732506243269L;
 
-	public LuxuriousSeat(int number, double aPrice) {
+	public LuxuriousSeat(int index, double aPrice) {
 		super();
 
-		positionWithinRow = number;
+		positionWithinRow = index;
 		price = aPrice;
 		table = true;
 

@@ -19,12 +19,10 @@ public class Theater extends Room implements Serializable {
 		super(name, capacity);
 	}
 
-	@Override
-	public String toString() {
-		String description = super.toString();
-		description += " Room type : Theatre";
-		return description;
-	}
+	
+	  @Override public String toString() { String description = super.toString();
+	  description += " Room type : Theatre"; return description; }
+	 
 
 	@Override
 	protected RoomType getRoomType() {

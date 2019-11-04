@@ -111,16 +111,16 @@ public class AdminGUI extends JFrame implements Serializable {
 							"Plese give the name of the room where the conversion will take place",
 							JOptionPane.QUESTION_MESSAGE);
 
-					Integer row = Integer.parseInt(JOptionPane.showInputDialog(null,
-							"Please give the index of the row whose seat will be converted",
-							JOptionPane.QUESTION_MESSAGE));
-
-					Integer seat = Integer.parseInt(JOptionPane.showInputDialog(null,
-							"Please give the index of the seat to be converted", JOptionPane.QUESTION_MESSAGE));
-
 					Room found = workspace.existingRoom(roomName);
 
 					if (found != null) {
+						Integer row = Integer.parseInt(JOptionPane.showInputDialog(null,
+								"Please give the index of the row whose seat will be converted",
+								JOptionPane.QUESTION_MESSAGE));
+
+						Integer seat = Integer.parseInt(JOptionPane.showInputDialog(null,
+								"Please give the index of the seat to be converted", JOptionPane.QUESTION_MESSAGE));
+
 						found.makeLuxurious(row, seat);
 					} else
 						JOptionPane.showMessageDialog(null, "No room with the given name exists", null,
@@ -137,7 +137,7 @@ public class AdminGUI extends JFrame implements Serializable {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					workspace.saveArtspace();
+					Artspace.saveArtspace();
 				} catch (IOException ex) {
 					JOptionPane.showMessageDialog(null, "An error occured during the writing of the data to disk", null,
 							JOptionPane.ERROR_MESSAGE, null);
@@ -245,17 +245,17 @@ public class AdminGUI extends JFrame implements Serializable {
 							"Please give the name of the room from which the row will be deleted ",
 							JOptionPane.QUESTION_MESSAGE);
 
+					Room found = workspace.existingRoom(roomName);
+
 					int position = Integer.parseInt(JOptionPane.showInputDialog(null,
 							"Please give the index of the row to be deleted", JOptionPane.QUESTION_MESSAGE));
 
-					Room found = workspace.existingRoom(roomName);
+					found.deleteRow(position);
 
-					if (found != null)
-						found.deleteRow(position);
-					else
-						JOptionPane.showMessageDialog(null, "Δεν βρέθηκε χώρος με αυτό το όνομα", null,
-								JOptionPane.ERROR_MESSAGE, null);
 				} catch (NullPointerException ex) {
+
+					JOptionPane.showMessageDialog(null, "No room with the given name was found", null,
+							JOptionPane.ERROR_MESSAGE, null);
 					return;
 				}
 			}
@@ -277,12 +277,11 @@ public class AdminGUI extends JFrame implements Serializable {
 
 					Room found = workspace.existingRoom(roomName);
 
-					if (found != null)
-						found.addRow(capacity, luxurious);
-					else
-						JOptionPane.showMessageDialog(null, "There was no room found with the given name", null,
-								JOptionPane.ERROR_MESSAGE, null);
+					found.addRow(capacity, luxurious);
+
 				} catch (NullPointerException ex) {
+					JOptionPane.showMessageDialog(null, "There was no room found with the given name", null,
+							JOptionPane.ERROR_MESSAGE, null);
 					return;
 				}
 			}
@@ -327,13 +326,7 @@ public class AdminGUI extends JFrame implements Serializable {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					addShow(e.getActionCommand());
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (HeadlessException e1) {
+				}  catch (HeadlessException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (CloneNotSupportedException e1) {
@@ -349,7 +342,7 @@ public class AdminGUI extends JFrame implements Serializable {
 
 				try {
 					addShow(e.getActionCommand());
-				} catch (ClassNotFoundException | IOException | HeadlessException | CloneNotSupportedException ex) {
+				} catch (HeadlessException | CloneNotSupportedException ex) {
 					return;
 				}
 			}
@@ -429,11 +422,10 @@ public class AdminGUI extends JFrame implements Serializable {
 	 * @throws CloneNotSupportedException
 	 * @throws HeadlessException
 	 */
-	private void addShow(String actionCommand)
-			throws ClassNotFoundException, IOException, HeadlessException, CloneNotSupportedException {
+	private void addShow(String actionCommand) throws CloneNotSupportedException {
 
 		PlayType genre;
-		String movieName;
+		String showName;
 		Room room;
 		Show show = null;
 		String director;
@@ -444,79 +436,75 @@ public class AdminGUI extends JFrame implements Serializable {
 		String temp;
 		ArrayList<String> actors = new ArrayList<>();
 
-		if (actionCommand.contains("Pla")) {
-			try {
-				movieName = JOptionPane.showInputDialog(null, "Please give the name of the play",
-						JOptionPane.QUESTION_MESSAGE);
-
-				do {
-					temp = JOptionPane.showInputDialog(null,
-							"Please give the names of the play's actors (press enter to continue)",
-							JOptionPane.QUESTION_MESSAGE);
-					actors.add(temp);
-				} while (!temp.trim().equals(""));
-
-				director = JOptionPane.showInputDialog(null, "Please give the name of the director",
-						JOptionPane.QUESTION_MESSAGE);
-				description = JOptionPane.showInputDialog(null, "Please give a short description of the play",
-						JOptionPane.QUESTION_MESSAGE);
-				genre = PlayType.valueOf(JOptionPane.showInputDialog(null, "Please give the type of the play",
-						JOptionPane.QUESTION_MESSAGE));
-				duration = Double.parseDouble(JOptionPane.showInputDialog(null, "Please give the duration of the play",
-						JOptionPane.QUESTION_MESSAGE));
-				show = new Play(movieName, description, actors, director, genre, duration);
-
-				date = JOptionPane.showInputDialog(null, "Please give the date when the play will be performed",
-						JOptionPane.QUESTION_MESSAGE);
-
-				roomName = JOptionPane.showInputDialog(null,
-						"Please give the name of the room where the play will be performed",
-						JOptionPane.QUESTION_MESSAGE);
-			} catch (NullPointerException ex) {
-				return;
-			} catch (IllegalArgumentException ex2) {
-				JOptionPane.showMessageDialog(null, "There is no such kind of play!", null,
-						JOptionPane.INFORMATION_MESSAGE, null);
-				return;
-			}
-
-		}
-
-		if (actionCommand.contains("Mov")) {
-
-			try {
-				movieName = JOptionPane.showInputDialog(null, "Please give the name of the movie",
-						JOptionPane.QUESTION_MESSAGE);
-				Double movieDuration = Double.parseDouble(JOptionPane.showInputDialog(null,
-						"Please give the duration of the movie", JOptionPane.QUESTION_MESSAGE));
-
-				do {
-					temp = JOptionPane.showInputDialog(null,
-							"Please give the names of the play's actors (press enter to continue)",
-							JOptionPane.QUESTION_MESSAGE);
-					actors.add(temp);
-				} while (!temp.trim().equals(""));
-
-				director = JOptionPane.showInputDialog(null, "Please give the name of the director",
-						JOptionPane.QUESTION_MESSAGE);
-				description = JOptionPane.showInputDialog(null, "Please give a short description of the play",
-						JOptionPane.QUESTION_MESSAGE);
-				show = new Movie(movieName, description, actors, director, movieDuration);
-
-				date = JOptionPane.showInputDialog(null, "Please give the date when the movie will be shown",
-						JOptionPane.QUESTION_MESSAGE);
-
-				roomName = JOptionPane.showInputDialog(null,
-						"Please give the name of the room where the movie will be shown", JOptionPane.QUESTION_MESSAGE);
-			} catch (NullPointerException | NumberFormatException ex) {
-				return;
-			}
-
-		}
+		roomName = JOptionPane.showInputDialog(null, "Please give the name of the room where the show will take place",
+				JOptionPane.QUESTION_MESSAGE);
 
 		room = workspace.existingRoom(roomName);
 
 		if (room != null) {
+
+			if (actionCommand.contains("Pla")) {
+				try {
+					showName = JOptionPane.showInputDialog(null, "Please give the name of the play",
+							JOptionPane.QUESTION_MESSAGE);
+
+					do {
+						temp = JOptionPane.showInputDialog(null,
+								"Please give the names of the play's actors (press enter to continue)",
+								JOptionPane.QUESTION_MESSAGE);
+						actors.add(temp);
+					} while (!temp.trim().equals(""));
+
+					director = JOptionPane.showInputDialog(null, "Please give the name of the director",
+							JOptionPane.QUESTION_MESSAGE);
+					description = JOptionPane.showInputDialog(null, "Please give a short description of the play",
+							JOptionPane.QUESTION_MESSAGE);
+					genre = PlayType.valueOf(JOptionPane.showInputDialog(null, "Please give the type of the play",
+							JOptionPane.QUESTION_MESSAGE));
+					duration = Double.parseDouble(JOptionPane.showInputDialog(null,
+							"Please give the duration of the play", JOptionPane.QUESTION_MESSAGE));
+					show = new Play(showName, description, actors, director, genre, duration);
+
+				} catch (NullPointerException ex) {
+					return;
+				} catch (IllegalArgumentException ex2) {
+					JOptionPane.showMessageDialog(null, "There is no such kind of play!", null,
+							JOptionPane.INFORMATION_MESSAGE, null);
+					return;
+				}
+
+			}
+
+			if (actionCommand.contains("Mov")) {
+
+				try {
+					showName = JOptionPane.showInputDialog(null, "Please give the name of the movie",
+							JOptionPane.QUESTION_MESSAGE);
+					Double movieDuration = Double.parseDouble(JOptionPane.showInputDialog(null,
+							"Please give the duration of the movie", JOptionPane.QUESTION_MESSAGE));
+
+					do {
+						temp = JOptionPane.showInputDialog(null,
+								"Please give the names of the play's actors (press enter to continue)",
+								JOptionPane.QUESTION_MESSAGE);
+						actors.add(temp);
+					} while (!temp.trim().equals(""));
+
+					director = JOptionPane.showInputDialog(null, "Please give the name of the director",
+							JOptionPane.QUESTION_MESSAGE);
+					description = JOptionPane.showInputDialog(null, "Please give a short description of the play",
+							JOptionPane.QUESTION_MESSAGE);
+					show = new Movie(showName, description, actors, director, movieDuration);
+
+				} catch (NullPointerException | NumberFormatException ex) {
+					return;
+				}
+
+			}
+
+			date = JOptionPane.showInputDialog(null, "Please give the date when the show will take place",
+					JOptionPane.QUESTION_MESSAGE);
+			
 			if (room.addShow(show, date))
 				JOptionPane.showMessageDialog(null, "The addition was completed succesfully", null,
 						JOptionPane.INFORMATION_MESSAGE, null);
@@ -525,7 +513,7 @@ public class AdminGUI extends JFrame implements Serializable {
 						"The schedule for the specific date is full or the show has already been added", null,
 						JOptionPane.INFORMATION_MESSAGE, null);
 		} else {
-			JOptionPane.showMessageDialog(null, "The room to add the show in was not found", null,
+			JOptionPane.showMessageDialog(null, "The room where the show would be added was not found", null,
 					JOptionPane.INFORMATION_MESSAGE, null);
 		}
 

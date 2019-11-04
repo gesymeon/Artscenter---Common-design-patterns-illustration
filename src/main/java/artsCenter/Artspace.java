@@ -30,19 +30,19 @@ public class Artspace implements Serializable {
 	public static synchronized Artspace getInstance() throws IOException, ClassNotFoundException {
 
 		if (instance == null)
-			try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("artspace.txt"))) {
+			try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("artspace.bin"))) {
 				instance = ((Artspace) in.readObject());
 			} catch (FileNotFoundException e) {
 				instance = new Artspace();
 			} catch (ClassNotFoundException e) {
-				System.err.println("Trouble in Paradise");
+				System.err.println("toLogger");
 			}
 		return instance;
 
 	}
 
 	public static  void saveArtspace() throws IOException{
-		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("artspace.txt"))) {
+		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("artspace.bin"))) {
 			out.writeObject(instance);
 		}
 	}

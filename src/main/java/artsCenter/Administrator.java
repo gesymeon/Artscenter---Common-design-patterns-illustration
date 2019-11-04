@@ -11,7 +11,7 @@ public class Administrator implements Serializable {
 	private static final long serialVersionUID = 3898723476777410594L;
 
 	/**
-	 * Adds a new room to the artspace.
+	 * Adds a new room to the artCenter.
 	 * 
 	 * @param roomName     the name of the room.
 	 * @param roomCapacity the capacity of the room.
@@ -29,7 +29,7 @@ public class Administrator implements Serializable {
 	}
 
 	/**
-	 * Deletes a room from the artspace.
+	 * Deletes a room from the artsCenter.
 	 * 
 	 * @param roomName the name of the room to be deleted.
 	 * @return true if the deletion is successful.

@@ -4,9 +4,9 @@ package artsCenter;
 import java.io.Serializable;
 
 
-public abstract class Seat implements Serializable {
+public abstract class Seat implements Serializable{
 
-	private static final long serialVersionUID = 3883043394988396256L;
+	private static final long serialVersionUID = -4796222305378801974L;
 	// used to id its seat uniquely.
 	private static int shared = 0;
 	// keeps the reservation status of the seat.
@@ -55,7 +55,6 @@ public abstract class Seat implements Serializable {
 		return positionWithinRow;
 	}
 
-	// TODO: I should test !
 	public abstract boolean isLuxurious();
 
 	public void setReserved(Boolean b) {
@@ -68,7 +67,7 @@ public abstract class Seat implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.valueOf(positionWithinRow);
+		return String.valueOf(id);
 	}
 
 	public int getID() {

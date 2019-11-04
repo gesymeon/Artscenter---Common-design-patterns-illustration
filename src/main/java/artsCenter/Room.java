@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-public abstract class Room implements Serializable {
+public abstract class Room implements Serializable{
 
-	private static final long serialVersionUID = 3400998579007578353L;
+	private static final long serialVersionUID = -1708615501951868346L;
 	protected String name;
 	protected int capacity;
 	protected List<Row> rows;
@@ -70,12 +70,13 @@ public abstract class Room implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + capacity;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((getRoomType() == null) ? 0 : getRoomType().hashCode());
 		return result;
 	}
 
+	//equality is based  on room's name and type
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -89,9 +90,6 @@ public abstract class Room implements Serializable {
 		}
 		Room other = (Room) obj;
 		if (getRoomType() != other.getRoomType()) {
-			return false;
-		}
-		if (capacity != other.capacity) {
 			return false;
 		}
 		if (name == null) {

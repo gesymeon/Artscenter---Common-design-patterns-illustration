@@ -1,0 +1,70 @@
+[
+  {
+    "name": "gs",
+    "telephone": "1",
+    "reservations": [
+      [
+        {
+          "type": "Movie",
+          "properties": {
+            "name": "drei",
+            "description": "bad",
+            "actors": [
+              "depp",
+              ""
+            ],
+            "director": "kubrik",
+            "duration": 3.0,
+            "price": 0.0
+          }
+        },
+        [
+          {
+            "type": "PlainSeat",
+            "properties": {
+              "reserved": true,
+              "table": false,
+              "positionWithinRow": 2,
+              "id": 2,
+              "price": 5.0
+            }
+          }
+        ]
+      ]
+    ]
+  },
+  {
+    "name": "tik",
+    "telephone": "2",
+    "reservations": [
+      [
+        {
+          "type": "Movie",
+          "properties": {
+            "name": "drei",
+            "description": "bad",
+            "actors": [
+              "depp",
+              ""
+            ],
+            "director": "kubrik",
+            "duration": 3.0,
+            "price": 0.0
+          }
+        },
+        [
+          {
+            "type": "PlainSeat",
+            "properties": {
+              "reserved": true,
+              "table": false,
+              "positionWithinRow": 3,
+              "id": 3,
+              "price": 5.0
+            }
+          }
+        ]
+      ]
+    ]
+  }
+]

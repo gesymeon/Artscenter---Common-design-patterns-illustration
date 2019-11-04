@@ -23,13 +23,11 @@ public class Play extends Show implements Serializable {
 		this.genre = genre;
 	}
 
-	@Override
-	public String toString() {
-		String text = super.toString();
-		text += "Show type : Play" + "<br>" + "<br>";
-		text += "Play's genre : " + genre;
-		return text;
-	}
+	/*
+	 * @Override public String toString() { String text = super.toString(); text +=
+	 * "Show type : Play" + "<br>" + "<br>"; text += "Play's genre : " + genre;
+	 * return text; }
+	 */
 
 	@Override
 	public boolean equals(Object obj) {

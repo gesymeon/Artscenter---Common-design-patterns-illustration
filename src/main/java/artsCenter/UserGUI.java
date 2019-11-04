@@ -22,10 +22,6 @@ public class UserGUI extends JFrame implements Serializable {
 	private EndUser user;
 	private JMenu file;
 
-//παρουσιαζονται στοιχεια για καθε αιθουσα και κουμπια που οδηγουν στις ημερομηνιες προβολων αυτης που θα επιλεξουμε. 
-//οι καταχωρησεις για καθε αιθουσα γινονται σε ενα πλεγμα το πολυ 5 στηλων και αποτελουνται απο μια ετικετα με τις πληροφοριες
-//και ενα κουμπι για την επιλογη της αιθουσας.
-
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 
 		try {
@@ -52,23 +48,22 @@ public class UserGUI extends JFrame implements Serializable {
 
 			try {
 				EndUser temp = EndUser.searchUser(name);
-				if (temp != null) {
+				if (temp != null)
 					new UserGUI(temp);
-					return;
-				} else {
+				else {
+
 					JOptionPane.showMessageDialog(null, "The given username does not exist", null,
 							JOptionPane.ERROR_MESSAGE, null);
 					System.exit(0);
 				}
-			} catch (EOFException ex) {
-				JOptionPane.showMessageDialog(null, "The given username does not exist", null,
-						JOptionPane.INFORMATION_MESSAGE, null);
 			} catch (IOException ex) {
 				JOptionPane.showMessageDialog(null, "Input error while reading data from disk", null,
 						JOptionPane.ERROR_MESSAGE, null);
 			} catch (ClassNotFoundException ex) {
 				JOptionPane.showMessageDialog(null, "Missing data from .jar file about the application's classes", null,
 						JOptionPane.ERROR_MESSAGE, null);
+			} finally {
+				System.exit(ERROR);
 			}
 
 		} else if (result == JOptionPane.NO_OPTION) {
@@ -81,9 +76,6 @@ public class UserGUI extends JFrame implements Serializable {
 				}
 			} catch (IOException ex) {
 				JOptionPane.showMessageDialog(null, "Input error while reading data from disk", null,
-						JOptionPane.ERROR_MESSAGE, null);
-			} catch (ClassNotFoundException ex) {
-				JOptionPane.showMessageDialog(null, "Missing data from .jar file regarding the User class", null,
 						JOptionPane.ERROR_MESSAGE, null);
 			}
 		}
@@ -106,7 +98,6 @@ public class UserGUI extends JFrame implements Serializable {
 	public UserGUI(EndUser user) throws ClassNotFoundException, IOException {
 
 		this.user = user;
-		System.out.println(this.user.getReservations());
 		setTitle("User GUI");
 		setSize(500, 500);
 		setLocationRelativeTo(null);
@@ -147,13 +138,13 @@ public class UserGUI extends JFrame implements Serializable {
 					SwingConstants.CENTER);
 
 			if (Artspace.getInstance().getRooms().get(i).getRoomType() == RoomType.Cinema) {
-				imageURL = getClass().getResource("/images/cinema.gif");
+				imageURL = UserGUI.class.getClassLoader().getResource("cinema.gif");
 				if (imageURL != null) {
 					icon = new ImageIcon(imageURL);
 					button.setIcon(icon);
 				}
 			} else if (Artspace.getInstance().getRooms().get(i).getRoomType() == RoomType.Theater) {
-				imageURL = getClass().getResource("/images/theatre.gif");
+				imageURL = UserGUI.class.getClassLoader().getResource("theatre.gif");
 				if (imageURL != null) {
 					icon = new ImageIcon(imageURL);
 					button.setIcon(icon);
@@ -163,9 +154,7 @@ public class UserGUI extends JFrame implements Serializable {
 			temp.add(label);
 			temp.add(button);
 			temp.setBorder(BorderFactory.createLineBorder(Color.black));
-
 			panel.add(temp);
-
 		}
 
 		menubar.add(file);
@@ -190,9 +179,9 @@ public class UserGUI extends JFrame implements Serializable {
 
 		LinkedHashMap<String, Schedule> schedules = (LinkedHashMap<String, Schedule>) room.getSchedules();
 
-// το panel αυτο (outer) προστιθεται στο τελος στο frame , οταν θα περιεχει ολα τα υπολοιπα panels (BorderLayout)το καθενα απο τα οποια
+// το panel αυτο (outer) προστιθεται στο τελος στο frame , οταν θα περιεχει ολα τα υπολοιπα temps (BorderLayout)το καθενα απο τα οποια
 // περιεχει την ημερομηνια(label-.NORTH) , το προγραμμα και τα θεαματα(panel σε gridlayout(0,2) με το προγραμμα να αποτελειται απο διαδοχικα labels 
-// (durations) και τα θεαματα (buttons)) , βρισκοται στο .SOUTH των panels που προσθετονται στο outer).
+// (durations) και θεαματα (buttons)) , βρισκοται στο .SOUTH των temps που προσθετονται στο outer).
 
 		JPanel outer = new JPanel(new GridLayout(0, 5, 0, 0));
 
@@ -229,7 +218,7 @@ public class UserGUI extends JFrame implements Serializable {
 				panel.setBorder(BorderFactory.createLineBorder(Color.black));
 
 			}
-			// TODO: At BorderLayout.CENTER of temp, the "best" show's image can be
+			// TODO: At BorderLayout.CENTER of temp, the highlight show's image can be
 			// included.
 			temp.add(panel, BorderLayout.SOUTH);
 
@@ -245,20 +234,18 @@ public class UserGUI extends JFrame implements Serializable {
 	}
 
 	/**
-	 * Εμφανίζει την αίθουσα στην οποία θα παρουσιαστεί το θέαμα της καταχώρησης.
+	 * Shows the room where the entry's show will be performed.
 	 * 
-	 * @author George Simeonidis
-	 * @param room Η αίθουσα στην οποία θα παρουσιαστεί το θέαμα.
+	 * @param room The room where the show will be performed.
 	 */
 	private void displayRoom(ScheduleEntry entry) {
 
-		JFrame frame = new JFrame(entry.getShow().getName() + "'s room");
+		JFrame frame = new JFrame(entry.getShow().getName() + "'s Room");
 		frame.setSize(1000, 1500);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		ArrayList<Row> rows = (ArrayList<Row>) entry.getRows();
 		int maxSeats = entry.maximumSeats();
-//ολες οι σειρες εμφανιζουν το ιδιο πληθος θεσεων (μεγιστο των σειρων ) αλλα καποιες ειναι διαθεσιμες για κρατηση ("υπαρχουν") ενω αλλες οχι.
 		GridLayout grid = new GridLayout(0, maxSeats, 5, 5);
 		JPanel inner = new JPanel(grid);
 
@@ -267,60 +254,49 @@ public class UserGUI extends JFrame implements Serializable {
 			for (int k = 1; k <= maxSeats; k++) {
 				if (row.getSeat(k) != null) {
 					button = new JButton(row.getSeat(k).toString());
-					// πλεον ο αριθμος της θεσης δεν εξαρταται απο το k που ειναι μετρητης βρογχου κ
-					// αλλαζει σε καθε επαναληψη.
-					// δημιουργουμε την temp ωστε να αναγνωριζεται ως effectively final και να
-					// μπορει να γινει αναφορα σε αυτην
-					// απο οποιαδηποτε inner class (στην περιπτωση μας την ανωνυμη εσωτερικη που
-					// δημιουργειται μεσω του actionListener
-					// του button)
+
+					// we create temp so we can reference it as an effectively final variable from
+					// within the anonymous inner class of button's actionListener.
+					// using k to reference a seat within the actionListener would result to a
+					// compile error, and this here is probably the simplest bypass around it.
 					Seat temp = row.getSeat(k);
 					if (temp.isLuxurious())
 						button.setBackground(Color.pink);
-					if(user.getReservations().contains(temp))
+					if (user.containsReservation(entry.getShow(), temp))
 						button.setBackground(Color.green);
-					else if(temp.isReserved())
+					else if (temp.isReserved())
 						button.setBackground(Color.red);
-					
-					
-					// εδω πρεπει να προστεθει ο actionListener για τις επιλογες του χρηστη
+
 					button.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							boolean succeed;
 							int result;
-							// μπορουμε να αναφερθουμε απλα ως button κ να χει σωστο αποτελεσμα , να το
-							// ελεγξω στο τελος.
 							JButton button = (JButton) e.getSource();
 
-							if (user.getReservations().contains(temp)) {
+							if (user.containsReservation(entry.getShow(), temp)) {
 								result = JOptionPane.showConfirmDialog(null, "Do you want to cancel your reservation;",
 										"Cancel reservation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 								if (result == JOptionPane.YES_OPTION) {
-									user.cancelReservation(temp);
+									user.cancelReservation(entry.getShow(), temp);
 									button.setBackground(Color.magenta);
 								}
 								return;
-
 							}
-							// ελεγχει την περιπτωση η θεση να ειναι κρατημενη απο αλλον χρηστη
+
 							else if (temp.isReserved()) {
-								JOptionPane.showMessageDialog(null, "This seat is reserved", null,
+								JOptionPane.showMessageDialog(null, "This seat is already reserved", null,
 										JOptionPane.ERROR_MESSAGE, null);
 								return;
 							}
-
 
 							result = JOptionPane.showConfirmDialog(null, "Do you want to reserve this seat;", "Title",
 									JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 							if (result == JOptionPane.YES_OPTION) {
 
-								succeed = user.makeReservation(temp);
+								boolean succeed = user.makeReservation(entry.getShow(), temp);
 								if (succeed) {
-									// η θεση της συγκεκριμενης σειρας στην συγκεκριμενη προβολη(ScheduleEntry)
-									// πλεον θεωρειται καταχωρημενη στον χρηστη.
-									JOptionPane.showMessageDialog(null, "Your reservation is registered", "Title",
+									JOptionPane.showMessageDialog(null, "Your reservation is now registered", "Title",
 											JOptionPane.INFORMATION_MESSAGE);
 									JOptionPane.showMessageDialog(null, "The seat costs: "
 											+ (temp.getPrice() + entry.getShow().getPrice()) + " euros.", "Title",
@@ -330,14 +306,15 @@ public class UserGUI extends JFrame implements Serializable {
 										Artspace.saveArtspace();
 									} catch (IOException ex) {
 										JOptionPane.showMessageDialog(null,
-												"Προέκυψε σφάλμα κατα την καταχώρηση της θέσης στο σύστημα", "Title",
+												"An error occured during the new seat registration", "Title",
 												JOptionPane.ERROR_MESSAGE);
 									}
 
-								} else
+								} else {
 									JOptionPane.showMessageDialog(null,
-											"Προέκυψε κάποιο λάθος κατα την κράτηση της θέσης στο σύστημα", "Title",
+											"An error occured during the new seat registration", "Title",
 											JOptionPane.INFORMATION_MESSAGE);
+								}
 
 							}
 
@@ -345,36 +322,28 @@ public class UserGUI extends JFrame implements Serializable {
 					});
 				} else {
 					button = new JButton();
-					button.addActionListener(new ActionListener() {
-
-						public void actionPerformed(ActionEvent e) {
-							JOptionPane.showMessageDialog(null, "Η θέση δεν είναι διαθέσιμη", "Title",
-									JOptionPane.INFORMATION_MESSAGE);
-
-						}
+					button.addActionListener(e -> {
+						JOptionPane.showMessageDialog(null, "The seat is not available", "Title",
+								JOptionPane.INFORMATION_MESSAGE);
 					});
 				}
 				inner.add(button);
 			}
 
-			
-			//TODO: based on show type choose an appropriate image
-			Icon icon;
-			JLabel label = new JLabel();
-			URL imageURL = getClass().getResource("/images/cinema.jpg");
-			
-			
-			if (imageURL != null) {
-				icon = new ImageIcon(imageURL);
-				label.setIcon(icon);
-			}
-			frame.add(label, BorderLayout.NORTH);
-
-			frame.add(inner, BorderLayout.CENTER);
-			frame.pack();
-			frame.setVisible(true);
-
 		}
+		// TODO: based on show type choose an appropriate image
+		Icon icon;
+		JLabel label = new JLabel();
+		URL imageURL = UserGUI.class.getClassLoader().getResource("cinema.jpg");
+
+		if (imageURL != null) {
+			icon = new ImageIcon(imageURL);
+			label.setIcon(icon);
+		}
+		frame.add(label, BorderLayout.NORTH);
+		frame.add(inner, BorderLayout.CENTER);
+		frame.pack();
+		frame.setVisible(true);
 
 	}
 }

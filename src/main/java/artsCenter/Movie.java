@@ -19,13 +19,11 @@ public class Movie extends Show implements Serializable {
 		super(name, description, actors, director, duration);
 	}
 
-	@Override
-	public String toString() {
-		String text = super.toString();
-		text += "Duration : " + duration + "<br>" + "<br>";
-		text += "Show type : Movie";
-		return text;
-	}
+	/*
+	 * @Override public String toString() { String text = super.toString(); text +=
+	 * "Duration : " + duration + "<br>" + "<br>"; text += "Show type : Movie";
+	 * return text; }
+	 */
 
 	/**
 	 * Returns the additional ticket's cost depending on the movie's genre.

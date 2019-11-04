@@ -2,61 +2,113 @@
 package artsCenter;
 
 import java.io.File;
-import java.io.FileInputStream;
-
-import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
+import com.google.gson.stream.JsonReader;
 
 public class EndUser implements Serializable {
 
-	private static final long serialVersionUID = -5671014762396218961L;
+	private static final long serialVersionUID = -7485116421829229937L;
+
+	private static final String RESOURCE_PATH = "users.json";
+
+	private static final Gson gson;
+
+	static {
+		gson = new GsonBuilder().enableComplexMapKeySerialization().registerTypeAdapter(Show.class, new ShowAdapter())
+				.registerTypeAdapter(Seat.class, new SeatAdapter()).setPrettyPrinting().create();
+	}
+
 	private String name;
 	private String telephone;
-	private ArrayList<Seat> reservations;
+	private Map<Show, ArrayList<Seat>> reservations;
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((telephone == null) ? 0 : telephone.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EndUser other = (EndUser) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name)) {
+			return false;
+		}
+		if (telephone == null) {
+			if (other.telephone != null)
+				return false;
+		} else if (!telephone.equals(other.telephone)) {
+			return false;
+		}
+		return true;
+	}
 
 	public void saveAccount() throws IOException {
 
-		/*
-		 * try (ObjectOutputStream out = new ObjectOutputStream(new
-		 * FileOutputStream("users.txt"))) { out.writeObject(this); }
-		 */
+		if (new File(RESOURCE_PATH).exists()) {
+			EndUser[] users = gson.fromJson(new JsonReader(new FileReader(RESOURCE_PATH)), EndUser[].class);
 
-		boolean exists = new File("users.txt").exists();
+			List<EndUser> asList = new LinkedList<>(Arrays.asList(users));
+			asList.remove(this);
+			asList.add(this);
 
-		try (FileOutputStream fos = new FileOutputStream("users.txt", true);
-				ObjectOutputStream oos = exists ? new ObjectOutputStream(fos) {
-					@Override
-					protected void writeStreamHeader() throws IOException {
-						reset();
-					}
-				} : new ObjectOutputStream(fos)) {
-			oos.writeObject(this);
-		}
+			JsonElement jsonobject = gson.toJsonTree(asList);
 
-	}
-	
-	//TODO: find the best way to refactor this
-	public static EndUser searchUser(String username) throws IOException, ClassNotFoundException {
-		if (new File("users.txt").exists()) {
-			FileInputStream fis = new FileInputStream("users.txt");
-			try (ObjectInputStream in = new ObjectInputStream(fis)) {
-				while (fis.available() > 0) {
-					EndUser temp = (EndUser) in.readObject();
-					if (temp.getName().equals(username)) {
-						return temp;
-					}
-				}
-			} finally {
-				fis.close();
+			try (FileWriter writer = new FileWriter(RESOURCE_PATH)) {
+				gson.toJson(jsonobject, writer);
+				writer.flush();
+
+			} catch (JsonIOException | IOException e) {
+				System.out.println("ToLogger");
 			}
 
+		} else {
+			try (FileWriter writer = new FileWriter(RESOURCE_PATH)) {
+				gson.toJson(Arrays.asList(this), writer);
+				writer.flush();
+
+			} catch (JsonIOException | IOException e) {
+				System.out.println("ToLogger");
+			}
+		}
+	}
+
+	public static EndUser searchUser(String username) throws IOException {
+
+		EndUser[] users = gson.fromJson(new JsonReader(new FileReader(RESOURCE_PATH)), EndUser[].class);
+
+		if (users != null) {
+			List<EndUser> asList = new LinkedList<>(Arrays.asList(users));
+
+			for (EndUser user : asList)
+				if (user.getName().equals(username))
+					return user;
 		}
 		return null;
 	}
@@ -64,10 +116,10 @@ public class EndUser implements Serializable {
 	public EndUser(String name, String telephone) {
 		this.name = name;
 		this.telephone = telephone;
-		reservations = new ArrayList<>();
+		reservations = new HashMap<>();
 	}
 
-	public List<Seat> getReservations() {
+	public Map<Show, ArrayList<Seat>> getReservations() {
 		return reservations;
 	}
 
@@ -88,20 +140,36 @@ public class EndUser implements Serializable {
 	}
 
 	/**
+	 * Checks if the the particular seat in the particular show is registered to the
+	 * user.
+	 * 
+	 * @param seat the seat to be checked for registration.
+	 * @param show the show to be checked for registration.
+	 * @return true if the reservation for the user exists, false otherwise.
+	 */
+	public boolean containsReservation(Show show, Seat seat) {
+		ArrayList<Seat> temp = reservations.get(show);
+		return (temp != null && temp.contains(seat));
+	}
+
+	/**
 	 * Reserves a seat for the user.
 	 * 
 	 * @param seat the seat to be reserved.
 	 * @return true if the reservation can be completed, false if the seat is
 	 *         already reserved.
 	 */
-	public boolean makeReservation(Seat seat) {
-		if (seat.isReserved())
+	public boolean makeReservation(Show show, Seat seat) {
+		if (seat.isReserved()) {
 			return false;
-		else {
-			seat.setReserved(true);
-			reservations.add(seat);
-			return true;
 		}
+		seat.setReserved(true);
+		ArrayList<Seat> temp = reservations.get(show);
+		if (temp == null)
+			temp = new ArrayList<>();
+		temp.add(seat);
+		reservations.put(show, temp);
+		return true;
 	}
 
 	/**
@@ -112,19 +180,18 @@ public class EndUser implements Serializable {
 	 * @return true if the seat exists on the user's reservations list, false
 	 *         otherwise.
 	 */
-	public boolean cancelReservation(Seat seat) {
+	public boolean cancelReservation(Show show, Seat seat) {
 
-		if (!seat.isReserved())
+		if (!seat.isReserved()) {
 			return false;
-		else {
-			if (reservations.contains(seat)) {
-				seat.setReserved(false);
-				reservations.remove(seat);
-				return true;
-			} else {
-				return false;
-			}
 		}
+		ArrayList<Seat> temp = reservations.get(show);
+		if (temp != null && temp.contains(seat)) {
+			seat.setReserved(false);
+			temp.remove(seat);
+			return true;
+		}
+		return false;
 
 	}
 

@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class PlainSeat extends Seat implements Serializable {
 
-	private static final long serialVersionUID = -7192639425678034506L;
+	private static final long serialVersionUID = -3152468396855403108L;
 
 	public PlainSeat(int index, double aPrice) {
 		super();
