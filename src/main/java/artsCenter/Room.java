@@ -153,7 +153,7 @@ public abstract class Room implements Serializable{
 	 */
 	public void makeLuxurious(int row, int seat) {
 
-		// The new entries copy the structure from the rows arraylist so the code
+		// The new entries copy the structure from the room's rows arrayList so the code
 		// below is needed!
 		// Ensures that new schedule entries are initialized with the current row's seat
 		// quality.
@@ -213,7 +213,6 @@ public abstract class Room implements Serializable{
 		if (temp != null)
 			return false;
 		else {
-
 			Schedule schedule = new Schedule(12, 24, rows);
 			schedules.put(date, schedule);
 			return true;
@@ -237,8 +236,7 @@ public abstract class Room implements Serializable{
 	}
 
 	/**
-	 * Adds a row in the room and properly updates all the schedule's to keep up
-	 * with the new room's structure.
+	 * Adds a new row in the room.
 	 * 
 	 * @param capacity the number of seats of the new row
 	 * @param lux      the new row's quality of seats
@@ -357,7 +355,7 @@ public abstract class Room implements Serializable{
 		return null;
 	}
 
-	// TODO: rewrite this function ??
+	// Probably better if a third class had been used to perform this and similar checks.
 	/**
 	 * Restricts the inclusion of shows to facilities when their types are
 	 * incompatible.

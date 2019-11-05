@@ -1,7 +1,7 @@
 [
   {
-    "name": "gs",
-    "telephone": "1",
+    "name": "jake",
+    "telephone": "12",
     "reservations": [
       [
         {
@@ -24,12 +24,53 @@
             "properties": {
               "reserved": true,
               "table": false,
-              "positionWithinRow": 2,
-              "id": 2,
+              "positionWithinRow": 5,
+              "id": 5,
               "price": 5.0
             }
           }
         ]
+      ]
+    ]
+  },
+  {
+    "name": "gs",
+    "telephone": "1",
+    "reservations": [
+      [
+        {
+          "type": "Movie",
+          "properties": {
+            "name": "drei",
+            "description": "bad",
+            "actors": [
+              "depp",
+              ""
+            ],
+            "director": "kubrik",
+            "duration": 3.0,
+            "price": 0.0
+          }
+        },
+        []
+      ],
+      [
+        {
+          "type": "Play",
+          "properties": {
+            "genre": "Comedy",
+            "name": "play it is",
+            "description": "good play",
+            "actors": [
+              "famous actor",
+              ""
+            ],
+            "director": "jorgic",
+            "duration": 2.0,
+            "price": 0.0
+          }
+        },
+        []
       ]
     ]
   },
@@ -52,14 +93,32 @@
             "price": 0.0
           }
         },
+        []
+      ],
+      [
+        {
+          "type": "Play",
+          "properties": {
+            "genre": "Comedy",
+            "name": "play it is",
+            "description": "good play",
+            "actors": [
+              "famous actor",
+              ""
+            ],
+            "director": "jorgic",
+            "duration": 2.0,
+            "price": 0.0
+          }
+        },
         [
           {
             "type": "PlainSeat",
             "properties": {
               "reserved": true,
               "table": false,
-              "positionWithinRow": 3,
-              "id": 3,
+              "positionWithinRow": 2,
+              "id": 2,
               "price": 5.0
             }
           }

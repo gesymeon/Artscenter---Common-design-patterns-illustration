@@ -29,7 +29,7 @@ public class ScheduleEntry implements Serializable {
 		rows = new ArrayList<>();
 	}
 
-	public ScheduleEntry(float startingTime, float finishingTime, List<Row> rows) throws CloneNotSupportedException {
+	public ScheduleEntry(float startingTime, float finishingTime, List<Row> rows) {
 		this.startingTime = startingTime;
 		this.finishingTime = finishingTime;
 		this.rows = new ArrayList<>();

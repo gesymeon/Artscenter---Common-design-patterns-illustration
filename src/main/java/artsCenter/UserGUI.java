@@ -1,24 +1,20 @@
 
 package artsCenter;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-public class UserGUI extends JFrame implements Serializable {
+public class UserGUI extends JFrame {
 
-	private static final long serialVersionUID = 5019168243712464434L;
 	private EndUser user;
 	private JMenu file;
 
@@ -62,8 +58,6 @@ public class UserGUI extends JFrame implements Serializable {
 			} catch (ClassNotFoundException ex) {
 				JOptionPane.showMessageDialog(null, "Missing data from .jar file about the application's classes", null,
 						JOptionPane.ERROR_MESSAGE, null);
-			} finally {
-				System.exit(ERROR);
 			}
 
 		} else if (result == JOptionPane.NO_OPTION) {
@@ -73,16 +67,15 @@ public class UserGUI extends JFrame implements Serializable {
 					JOptionPane.showMessageDialog(null, "This username is already being used!", null,
 							JOptionPane.ERROR_MESSAGE, null);
 					System.exit(ERROR);
+				} else {// TODO: regex to have a valid phone number format
+					String phone = JOptionPane.showInputDialog("Input your phone number : ");
+					new UserGUI(new EndUser(name, phone));
 				}
 			} catch (IOException ex) {
 				JOptionPane.showMessageDialog(null, "Input error while reading data from disk", null,
 						JOptionPane.ERROR_MESSAGE, null);
 			}
 		}
-
-		// TODO: regex to have a valid phone number format
-		String phone = JOptionPane.showInputDialog("Input your phone number : ");
-		new UserGUI(new EndUser(name, phone));
 
 	}
 
@@ -99,8 +92,9 @@ public class UserGUI extends JFrame implements Serializable {
 
 		this.user = user;
 		setTitle("User GUI");
-		setSize(500, 500);
-		setLocationRelativeTo(null);
+		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		//in one screen configuration probably comment in
+		//frame.setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JMenuBar menubar = new JMenuBar();
@@ -126,9 +120,6 @@ public class UserGUI extends JFrame implements Serializable {
 
 			Room currentRoom = Artspace.getInstance().getRooms().get(i);
 
-			URL imageURL;
-			Icon icon;
-
 			JButton button = new JButton();
 
 			button.addActionListener(e -> displaySchedule(currentRoom));
@@ -137,19 +128,9 @@ public class UserGUI extends JFrame implements Serializable {
 			JLabel label = new JLabel("<html>" + Artspace.getInstance().getRooms().get(i).toString() + "</html>",
 					SwingConstants.CENTER);
 
-			if (Artspace.getInstance().getRooms().get(i).getRoomType() == RoomType.Cinema) {
-				imageURL = UserGUI.class.getClassLoader().getResource("cinema.gif");
-				if (imageURL != null) {
-					icon = new ImageIcon(imageURL);
-					button.setIcon(icon);
-				}
-			} else if (Artspace.getInstance().getRooms().get(i).getRoomType() == RoomType.Theater) {
-				imageURL = UserGUI.class.getClassLoader().getResource("theatre.gif");
-				if (imageURL != null) {
-					icon = new ImageIcon(imageURL);
-					button.setIcon(icon);
-				}
-			}
+			URL imageURL = UserGUI.class.getClassLoader().getResource("images/" + currentRoom.getRoomType() + ".jpg");
+			Icon icon = new ImageIcon(imageURL);
+			button.setIcon(icon);
 
 			temp.add(label);
 			temp.add(button);
@@ -178,10 +159,6 @@ public class UserGUI extends JFrame implements Serializable {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		LinkedHashMap<String, Schedule> schedules = (LinkedHashMap<String, Schedule>) room.getSchedules();
-
-// το panel αυτο (outer) προστιθεται στο τελος στο frame , οταν θα περιεχει ολα τα υπολοιπα temps (BorderLayout)το καθενα απο τα οποια
-// περιεχει την ημερομηνια(label-.NORTH) , το προγραμμα και τα θεαματα(panel σε gridlayout(0,2) με το προγραμμα να αποτελειται απο διαδοχικα labels 
-// (durations) και θεαματα (buttons)) , βρισκοται στο .SOUTH των temps που προσθετονται στο outer).
 
 		JPanel outer = new JPanel(new GridLayout(0, 5, 0, 0));
 
@@ -218,8 +195,9 @@ public class UserGUI extends JFrame implements Serializable {
 				panel.setBorder(BorderFactory.createLineBorder(Color.black));
 
 			}
-			// TODO: At BorderLayout.CENTER of temp, the highlight show's image can be
-			// included.
+			URL imageURL = UserGUI.class.getClassLoader().getResource("images/Calendar.jpg");
+			Icon icon = new ImageIcon(imageURL);
+			temp.add(new JLabel(icon), BorderLayout.CENTER);
 			temp.add(panel, BorderLayout.SOUTH);
 
 			temp.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -279,6 +257,11 @@ public class UserGUI extends JFrame implements Serializable {
 								if (result == JOptionPane.YES_OPTION) {
 									user.cancelReservation(entry.getShow(), temp);
 									button.setBackground(Color.magenta);
+									try {
+										Artspace.saveArtspace();
+									} catch (IOException ex) {
+										System.out.println("toLogger");
+									}
 								}
 								return;
 							}
@@ -331,15 +314,43 @@ public class UserGUI extends JFrame implements Serializable {
 			}
 
 		}
-		// TODO: based on show type choose an appropriate image
-		Icon icon;
 		JLabel label = new JLabel();
-		URL imageURL = UserGUI.class.getClassLoader().getResource("cinema.jpg");
+		URL imageURL = UserGUI.class.getClassLoader()
+				.getResource("images/" + entry.getShow().getClass().getSimpleName() + ".jpg");
 
-		if (imageURL != null) {
-			icon = new ImageIcon(imageURL);
-			label.setIcon(icon);
-		}
+		
+		
+		final Icon icon = new ImageIcon (new ImageIcon(imageURL).getImage().getScaledInstance(600,400, Image.SCALE_DEFAULT));
+		label.setIcon(icon);
+
+		label.setFont(new Font("Serif", Font.PLAIN, 30));
+		label.setForeground(new Color(0x000000));
+
+		label.addMouseListener(new MouseAdapter() {
+			boolean clicked = false;
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				label.setBorder(BorderFactory.createLineBorder(Color.BLUE, 10));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				label.setBorder(BorderFactory.createLineBorder(Color.black));
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				label.setText(entry.getShow().toString());
+				if (clicked) {
+					label.setIcon(icon);
+				} else {
+					label.setIcon(null);
+				}
+				clicked = !clicked;
+			}
+		});
+
 		frame.add(label, BorderLayout.NORTH);
 		frame.add(inner, BorderLayout.CENTER);
 		frame.pack();

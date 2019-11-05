@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -19,9 +18,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
 import com.google.gson.stream.JsonReader;
 
-public class EndUser implements Serializable {
-
-	private static final long serialVersionUID = -7485116421829229937L;
+public class EndUser {
 
 	private static final String RESOURCE_PATH = "users.json";
 
@@ -69,6 +66,8 @@ public class EndUser implements Serializable {
 		return true;
 	}
 
+	
+	
 	public void saveAccount() throws IOException {
 
 		if (new File(RESOURCE_PATH).exists()) {

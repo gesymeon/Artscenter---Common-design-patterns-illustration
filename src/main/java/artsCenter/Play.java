@@ -23,11 +23,12 @@ public class Play extends Show implements Serializable {
 		this.genre = genre;
 	}
 
-	/*
-	 * @Override public String toString() { String text = super.toString(); text +=
-	 * "Show type : Play" + "<br>" + "<br>"; text += "Play's genre : " + genre;
-	 * return text; }
-	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = super.toStringBuilder();
+		builder.append("Show type : Play<br>Play's Genre: " + genre + "</html>");
+		return builder.toString();
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -35,10 +36,8 @@ public class Play extends Show implements Serializable {
 			return false;
 		}
 		Play pobj = (Play) obj;
-		if (genre == pobj.getGenre()) {
-			return true;
-		}
-		return false;
+		return genre == pobj.getGenre();
+
 	}
 
 	@Override
@@ -53,9 +52,9 @@ public class Play extends Show implements Serializable {
 	}
 
 	/**
-	 * Returns the ticket price depending on play's genre.
+	 * Returns the additional ticket's cost depending on the play's genre.
 	 * 
-	 * @return the ticket's price.
+	 * @return the ticket's additional cost.
 	 */
 	@Override
 	public double getPrice() {

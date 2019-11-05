@@ -7,7 +7,7 @@ import java.util.List;
 public abstract class Show implements Serializable {
 
 	private static final long serialVersionUID = 7571597008872515496L;
-	
+
 	protected String name;
 	protected String description;
 	protected List<String> actors;
@@ -21,7 +21,6 @@ public abstract class Show implements Serializable {
 	}
 
 	/**
-	 * Initializes the common to its subclasses variables.
 	 * 
 	 * @param name        show's name.
 	 * @param description a brief description of the show.
@@ -108,15 +107,17 @@ public abstract class Show implements Serializable {
 
 	public abstract double getPrice();
 
-	
-	@Override
-	public String toString() {
-		String text;
-		text =  name + "" + director + "" + description ;
+	public StringBuilder toStringBuilder() {
+
+		StringBuilder builder = new StringBuilder("");
+		builder.append("<html> Title: " + name + "<br>Director: " + director + "<br>Description: " + description
+				+ "<br>" + "Actors: ");
+
 		for (String actor : actors)
-			text += actor + "";
-		return text;
+			builder.append(actor + ", ");
+		builder.append("<br>");
+
+		return builder;
 	}
-	 
 
 }

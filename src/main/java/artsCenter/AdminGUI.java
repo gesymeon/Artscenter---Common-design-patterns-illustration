@@ -326,7 +326,7 @@ public class AdminGUI extends JFrame implements Serializable {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					addShow(e.getActionCommand());
-				}  catch (HeadlessException e1) {
+				} catch (HeadlessException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (CloneNotSupportedException e1) {
@@ -343,7 +343,7 @@ public class AdminGUI extends JFrame implements Serializable {
 				try {
 					addShow(e.getActionCommand());
 				} catch (HeadlessException | CloneNotSupportedException ex) {
-					return;
+
 				}
 			}
 		});
@@ -398,17 +398,13 @@ public class AdminGUI extends JFrame implements Serializable {
 				} else {
 					JOptionPane.showMessageDialog(null, "There is not a show give the given name", null,
 							JOptionPane.ERROR_MESSAGE, null);
-					return;
 				}
 			} else {
 				JOptionPane.showMessageDialog(null, "There is not a room with the given name", null,
 						JOptionPane.ERROR_MESSAGE, null);
-				return;
 			}
 		} catch (NullPointerException ex) {
-			return;
 		}
-
 	}
 
 	/**
@@ -504,7 +500,7 @@ public class AdminGUI extends JFrame implements Serializable {
 
 			date = JOptionPane.showInputDialog(null, "Please give the date when the show will take place",
 					JOptionPane.QUESTION_MESSAGE);
-			
+
 			if (room.addShow(show, date))
 				JOptionPane.showMessageDialog(null, "The addition was completed succesfully", null,
 						JOptionPane.INFORMATION_MESSAGE, null);

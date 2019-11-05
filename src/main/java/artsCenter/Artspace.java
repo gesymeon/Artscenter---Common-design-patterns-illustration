@@ -60,7 +60,7 @@ public class Artspace implements Serializable {
 	 * 
 	 * @param roomName     the name of the room to be inserted in the artspace.
 	 * @param roomCapacity the capacity of the room to be inserted in the artspace.
-	 * @param roomtype     the type of the room to be inserted in the artspace.
+	 * @param roomType     the type of the room to be inserted in the artspace.
 	 * @return true if the insertion was successful, false otherwise.
 	 * @throws ParseException
 	 * @throws CloneNotSupportedException 
