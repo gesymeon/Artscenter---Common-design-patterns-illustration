@@ -6,21 +6,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-public class AdminGUI extends JFrame implements Serializable {
+public class AdminGUI extends JFrame {
 
-	private static final long serialVersionUID = -6097025320490573174L;
 	private JMenuBar menubar;
-	private JMenu rooms;
-	private JMenu shows;
-	private JMenu scheduleMenu;
-	private JMenu file;
 	private static Artspace workspace;
 
 	public static void main(String[] args) {
@@ -32,7 +25,7 @@ public class AdminGUI extends JFrame implements Serializable {
 
 		} catch (IOException ex) {
 
-			JOptionPane.showMessageDialog(null, "Could not read the artspace from file", null,
+			JOptionPane.showMessageDialog(null, "Could not read the artspace from disk", null,
 					JOptionPane.ERROR_MESSAGE, null);
 
 		} catch (ClassNotFoundException ex) {
@@ -45,10 +38,11 @@ public class AdminGUI extends JFrame implements Serializable {
 	}
 
 	/**
-	 * Δημιουργεί και εμφανίζει τα παράθυρα και τα μενού του γραφικού περιβάλλοντος.
+	 * Creates and shows the admin GUI.
 	 * 
-	 * @param admin Το αντικείμενο Administrator του οποίου ο πολυχώρος θα μπορεί να
-	 *              τροποποιηθεί.
+	 * @param admin the admin through whom all the changes in the artspace will be
+	 *              performed.
+	 * 
 	 */
 
 	public AdminGUI(Administrator admin) {
@@ -62,7 +56,7 @@ public class AdminGUI extends JFrame implements Serializable {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JLabel background = new JLabel();
-		imageURL = getClass().getResource("images/admin.jpg");
+		imageURL = AdminGUI.class.getClassLoader().getResource("images/Administrator.jpg");
 		if (imageURL != null) {
 			icon = new ImageIcon(imageURL);
 			background.setIcon(icon);
@@ -71,8 +65,8 @@ public class AdminGUI extends JFrame implements Serializable {
 		add(background, BorderLayout.CENTER);
 
 		menubar = new JMenuBar();
-		file = new JMenu("File");
-		rooms = new JMenu("Rooms");
+		JMenu file = new JMenu("File");
+		JMenu rooms = new JMenu("Rooms");
 		menubar.add(file);
 		menubar.add(rooms);
 
@@ -106,28 +100,27 @@ public class AdminGUI extends JFrame implements Serializable {
 		makeLux.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String roomName = (String) JOptionPane.showInputDialog(null,
-							"Plese give the name of the room where the conversion will take place",
-							JOptionPane.QUESTION_MESSAGE);
 
-					Room found = workspace.existingRoom(roomName);
+				String roomName = (String) JOptionPane.showInputDialog(null,
+						"Plese give the name of the room where the conversion will take place",
+						JOptionPane.QUESTION_MESSAGE);
 
-					if (found != null) {
-						Integer row = Integer.parseInt(JOptionPane.showInputDialog(null,
-								"Please give the index of the row whose seat will be converted",
-								JOptionPane.QUESTION_MESSAGE));
+				Room found = workspace.existingRoom(roomName);
 
-						Integer seat = Integer.parseInt(JOptionPane.showInputDialog(null,
-								"Please give the index of the seat to be converted", JOptionPane.QUESTION_MESSAGE));
+				if (found != null) {
+					Integer row = Integer.parseInt(JOptionPane.showInputDialog(null,
+							"Please give the index of the row whose seat will be converted",
+							JOptionPane.QUESTION_MESSAGE));
 
-						found.makeLuxurious(row, seat);
-					} else
-						JOptionPane.showMessageDialog(null, "No room with the given name exists", null,
-								JOptionPane.ERROR_MESSAGE, null);
-				} catch (NullPointerException ex) {
-					return;
+					Integer seat = Integer.parseInt(JOptionPane.showInputDialog(null,
+							"Please give the index of the seat to be converted", JOptionPane.QUESTION_MESSAGE));
+
+					found.makeLuxurious(row, seat);
+				} else {
+					JOptionPane.showMessageDialog(null, "No room with the given name exists", null,
+							JOptionPane.ERROR_MESSAGE, null);
 				}
+
 			}
 
 		});
@@ -146,8 +139,6 @@ public class AdminGUI extends JFrame implements Serializable {
 			}
 		});
 
-		// πρέπει να υπολοιηθούν έλεγχοι για το κατα πόσο οι τιμές που δίνονται απο τον
-		// χρηστη ειναι επιτρεπτές.
 		cinema.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -167,16 +158,15 @@ public class AdminGUI extends JFrame implements Serializable {
 					if (admin.addRoom(roomName, roomCapacity, RoomType.Cinema)) {
 						JOptionPane.showMessageDialog(null, "The room was added successfully", null,
 								JOptionPane.INFORMATION_MESSAGE, null);
-
-					} else
+					} else {
 						JOptionPane.showMessageDialog(null, "A room with the given name already exists", null,
 								JOptionPane.INFORMATION_MESSAGE, null);
+					}
 				} catch (ParseException | HeadlessException | ClassNotFoundException | IOException ex) {
 					JOptionPane.showMessageDialog(null, "An error has occured during the data reading from disk", null,
 							JOptionPane.INFORMATION_MESSAGE, null);
 				} catch (CloneNotSupportedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println("toLogger");
 				}
 
 			}
@@ -201,17 +191,15 @@ public class AdminGUI extends JFrame implements Serializable {
 					if (admin.addRoom(roomName, roomCapacity, RoomType.Theater)) {
 						JOptionPane.showMessageDialog(null, "Τhe theater was added successfully", null,
 								JOptionPane.INFORMATION_MESSAGE, null);
-
-					} else
+					} else {
 						JOptionPane.showMessageDialog(null, "A theater with the given name already exists", null,
 								JOptionPane.INFORMATION_MESSAGE, null);
-
+					}
 				} catch (ParseException | HeadlessException | ClassNotFoundException | IOException ex) {
 					JOptionPane.showMessageDialog(null, "There was an error when reading the data from disk", null,
 							JOptionPane.INFORMATION_MESSAGE, null);
 				} catch (CloneNotSupportedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println("toLogger");
 				}
 
 			}
@@ -227,12 +215,12 @@ public class AdminGUI extends JFrame implements Serializable {
 					if (admin.deleteRoom(roomName)) {
 						JOptionPane.showMessageDialog(null, "The room was successfully deleted", null,
 								JOptionPane.INFORMATION_MESSAGE, null);
-
-					} else
+					} else {
 						JOptionPane.showMessageDialog(null, "There is no room with the given name", null,
 								JOptionPane.INFORMATION_MESSAGE, null);
+					}
 				} catch (NullPointerException | HeadlessException | ClassNotFoundException | IOException ex) {
-					return;
+					System.out.println("toLogger");
 				}
 			}
 		});
@@ -256,7 +244,7 @@ public class AdminGUI extends JFrame implements Serializable {
 
 					JOptionPane.showMessageDialog(null, "No room with the given name was found", null,
 							JOptionPane.ERROR_MESSAGE, null);
-					return;
+
 				}
 			}
 		});
@@ -282,7 +270,6 @@ public class AdminGUI extends JFrame implements Serializable {
 				} catch (NullPointerException ex) {
 					JOptionPane.showMessageDialog(null, "There was no room found with the given name", null,
 							JOptionPane.ERROR_MESSAGE, null);
-					return;
 				}
 			}
 
@@ -298,13 +285,9 @@ public class AdminGUI extends JFrame implements Serializable {
 		setVisible(true);
 	}
 
-	/**
-	 * Implements the menu "Shows" and its submenus.
-	 * 
-	 */
 	private void createShowMenu() {
 
-		shows = new JMenu("Shows");
+		JMenu shows = new JMenu("Shows");
 		JMenu movies = new JMenu("Movies");
 		JMenu plays = new JMenu("Plays");
 
@@ -326,12 +309,8 @@ public class AdminGUI extends JFrame implements Serializable {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					addShow(e.getActionCommand());
-				} catch (HeadlessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (CloneNotSupportedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				} catch (HeadlessException | CloneNotSupportedException ex) {
+					System.out.println("toLogger");
 				}
 			}
 		});
@@ -371,47 +350,43 @@ public class AdminGUI extends JFrame implements Serializable {
 
 		String roomName;
 		String showName;
-		try {
-			do {
-				showName = JOptionPane.showInputDialog(null, "Please give the show's name (Press enter to continue)",
-						JOptionPane.QUESTION_MESSAGE);
-			} while (showName.trim().equals(""));
 
-			do {
-				roomName = JOptionPane.showInputDialog(null,
-						"Please give the name of the room where the show is presented", JOptionPane.QUESTION_MESSAGE);
-			} while (roomName.trim().equals(""));
+		do {
+			showName = JOptionPane.showInputDialog(null, "Please give the show's name (Press enter to continue)",
+					JOptionPane.QUESTION_MESSAGE);
+		} while (showName.trim().equals(""));
 
-			Room temp = workspace.existingRoom(roomName);
-			if (temp != null) {
-				Show result = temp.getShow(showName);
-				if (result != null) {
-					JFrame newFrame = new JFrame();
-					newFrame.setTitle("Movie information");
-					newFrame.setSize(1000, 1500);
-					newFrame.setLocationRelativeTo(null);
-					newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					JLabel details = new JLabel("<html>" + result.toString() + "</html>", SwingConstants.CENTER);
-					newFrame.add(details, BorderLayout.CENTER);
-					newFrame.pack();
-					newFrame.setVisible(true);
-				} else {
-					JOptionPane.showMessageDialog(null, "There is not a show give the given name", null,
-							JOptionPane.ERROR_MESSAGE, null);
-				}
+		do {
+			roomName = JOptionPane.showInputDialog(null, "Please give the name of the room where the show is presented",
+					JOptionPane.QUESTION_MESSAGE);
+		} while (roomName.trim().equals(""));
+
+		Room temp = workspace.existingRoom(roomName);
+		if (temp != null) {
+			Show result = temp.getShow(showName);
+			if (result != null) {
+				JFrame newFrame = new JFrame();
+				newFrame.setTitle("Movie information");
+				newFrame.setSize(1000, 1500);
+				newFrame.setLocationRelativeTo(null);
+				newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				JLabel details = new JLabel("<html>" + result.toString() + "</html>", SwingConstants.CENTER);
+				newFrame.add(details, BorderLayout.CENTER);
+				newFrame.pack();
+				newFrame.setVisible(true);
 			} else {
-				JOptionPane.showMessageDialog(null, "There is not a room with the given name", null,
+				JOptionPane.showMessageDialog(null, "There is not a show give the given name", null,
 						JOptionPane.ERROR_MESSAGE, null);
 			}
-		} catch (NullPointerException ex) {
+		} else {
+			JOptionPane.showMessageDialog(null, "There is not a room with the given name", null,
+					JOptionPane.ERROR_MESSAGE, null);
 		}
+
 	}
 
 	/**
 	 * 
-	 * Καθορίζει την λειτουργικότητα των αντικειμένων μενού που αφορούν την προσθήκη
-	 * θεάματος του μενού "θεάματα" με βάση την κατηγορία του εκάστωτε θεάματος προς
-	 * εισαγωγή.
 	 * 
 	 * @throws IOException
 	 * @throws ClassNotFoundException
@@ -422,7 +397,7 @@ public class AdminGUI extends JFrame implements Serializable {
 
 		PlayType genre;
 		String showName;
-		Room room;
+		Room room = null;
 		Show show = null;
 		String director;
 		String description;
@@ -443,13 +418,11 @@ public class AdminGUI extends JFrame implements Serializable {
 				try {
 					showName = JOptionPane.showInputDialog(null, "Please give the name of the play",
 							JOptionPane.QUESTION_MESSAGE);
-
 					do {
 						temp = JOptionPane.showInputDialog(null,
 								"Please give the names of the play's actors (press enter to continue)",
 								JOptionPane.QUESTION_MESSAGE);
-						actors.add(temp);
-					} while (!temp.trim().equals(""));
+					} while (!temp.trim().equals("") && actors.add(temp));
 
 					director = JOptionPane.showInputDialog(null, "Please give the name of the director",
 							JOptionPane.QUESTION_MESSAGE);
@@ -515,50 +488,44 @@ public class AdminGUI extends JFrame implements Serializable {
 
 	}
 
-	/**
-	 * Καθορίζει την λειτουργικότητα του αντικειμένου μενού που αφορά την διαγραφή
-	 * ενός θεάματος του μενού "θεάματα".
-	 * 
-	 */
 	private void deleteShow() {
-		try {
-			String showName = JOptionPane.showInputDialog(null, "Please give the name of the show to be deleted",
-					JOptionPane.QUESTION_MESSAGE);
 
-			String date = JOptionPane.showInputDialog(null, "Please give the day of the show's opening",
-					JOptionPane.QUESTION_MESSAGE);
+		String showName = JOptionPane.showInputDialog(null, "Please give the name of the show to be deleted",
+				JOptionPane.QUESTION_MESSAGE);
 
-			Room temp = workspace.showBasedSearch(showName, date);
+		String date = JOptionPane.showInputDialog(null, "Please give the day of the show's opening",
+				JOptionPane.QUESTION_MESSAGE);
 
-			if (temp != null) {
-				temp.deleteShow(showName, date);
+		Room temp = workspace.showBasedSearch(showName, date);
+
+		if (temp != null) {
+			if (temp.deleteShow(showName, date)) {
+				JOptionPane.showMessageDialog(null, "The show was deleted successfully", null,
+						JOptionPane.INFORMATION_MESSAGE, null);
 			} else {
 				JOptionPane.showMessageDialog(null,
-						"There is not a show with the given name on the schedule of the given date", null,
-						JOptionPane.INFORMATION_MESSAGE, null);
+						"An error occured during the show's deletion",
+						null, JOptionPane.ERROR_MESSAGE, null);
 			}
-		} catch (NullPointerException ex) {
-			return;
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"There is no room with the given show on the given date's schedule", null,
+					JOptionPane.INFORMATION_MESSAGE, null);
 		}
+
 	}
 
-	/**
-	 * Δημιουργεί , καθορίζει τις λειτουργίες και εμφανίζει το μενού "προγράμματα"
-	 * και οτι αυτό περιέχει.
-	 * 
-	 */
-	public void createScheduleMenu() {
+	private void createScheduleMenu() {
 
-		scheduleMenu = new JMenu("Schedule");
-
+		JMenu schedule = new JMenu("Schedule");
 		JMenuItem addSchedule = new JMenuItem("Add Schedule");
 		JMenuItem deleteSchedule = new JMenuItem("Delete Schedule");
 		JMenuItem changeSchedule = new JMenuItem("Change Schedule");
-		scheduleMenu.add(addSchedule);
-		scheduleMenu.add(deleteSchedule);
-		scheduleMenu.addSeparator();
-		scheduleMenu.add(changeSchedule);
-		menubar.add(scheduleMenu);
+		schedule.add(addSchedule);
+		schedule.add(deleteSchedule);
+		schedule.addSeparator();
+		schedule.add(changeSchedule);
+		menubar.add(schedule);
 
 		addSchedule.addActionListener(new ActionListener() {
 			@Override
@@ -579,7 +546,7 @@ public class AdminGUI extends JFrame implements Serializable {
 						JOptionPane.showMessageDialog(null, "There is already a schedule for the given date", null,
 								JOptionPane.INFORMATION_MESSAGE, null);
 				} catch (NullPointerException | HeadlessException | CloneNotSupportedException ex) {
-					return;
+					System.out.println("toLogger");
 				}
 
 			}
@@ -603,7 +570,7 @@ public class AdminGUI extends JFrame implements Serializable {
 						JOptionPane.showMessageDialog(null, "There is not a registered schedule for the given date",
 								null, JOptionPane.INFORMATION_MESSAGE, null);
 				} catch (NullPointerException ex) {
-					return;
+					System.out.println("toLogger");
 				}
 
 			}
@@ -612,20 +579,17 @@ public class AdminGUI extends JFrame implements Serializable {
 		changeSchedule.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String roomName = JOptionPane.showInputDialog(null,
-							"Please give the name of the room whose schedule will be converted",
-							JOptionPane.QUESTION_MESSAGE);
 
-					Room room = workspace.existingRoom(roomName);
-					if (room == null)
-						JOptionPane.showMessageDialog(null, "There is not a room with the given name", null,
-								JOptionPane.INFORMATION_MESSAGE, null);
-					else {
-						displayConfigScreen(room);
-					}
-				} catch (NullPointerException ex) {
-					return;
+				String roomName = JOptionPane.showInputDialog(null,
+						"Please give the name of the room whose schedule will be converted",
+						JOptionPane.QUESTION_MESSAGE);
+
+				Room room = workspace.existingRoom(roomName);
+				if (room == null)
+					JOptionPane.showMessageDialog(null, "There is not a room with the given name", null,
+							JOptionPane.INFORMATION_MESSAGE, null);
+				else {
+					displayConfigScreen(room);
 				}
 
 			}
@@ -649,10 +613,6 @@ public class AdminGUI extends JFrame implements Serializable {
 
 		LinkedHashMap<String, Schedule> schedules = (LinkedHashMap<String, Schedule>) room.getSchedules();
 
-//το panel αυτο (outer) προστιθεται στο τελος στο frame, οταν θα περιεχει ολα τα υπολοιπα panels (BorderLayout)το καθενα απο τα οποια
-//περιεχει την ημερομηνια(label-.NORTH) , το προγραμμα και τα θεαματα(panel σε gridlayout(0,2) με το προγραμμα να αποτελειται απο διαδοχικα labels 
-// (durations) και τα θεαματα (buttons)) , βρισκοται στο .SOUTH των panels που προσθετονται στο outer).
-
 		JPanel outer = new JPanel(new GridLayout(0, 5, 0, 0));
 
 		for (String date : schedules.keySet()) {
@@ -675,7 +635,7 @@ public class AdminGUI extends JFrame implements Serializable {
 				if (entry.getShow() != null)
 					button.setText(entry.getShow().getName());
 				else
-					button.setText("Κενή");
+					button.setText("Empty");
 
 				button.addActionListener(new ActionListener() {
 					@Override
@@ -698,38 +658,36 @@ public class AdminGUI extends JFrame implements Serializable {
 										"Please give the name of the show with which will be swapped",
 										JOptionPane.QUESTION_MESSAGE);
 								if (schedule.swapEntries(showName, nameToSwap)) {
-									// καλούμε ξανά την συνάρτηση για να ενημερωθεί το πρόγραμμα της αίθουσας της
-									// συγκεκριμένης ημερομηνίας με τις αλλαγές κ κλείνουμε το παλιό παράθυρο.
 									newframe.dispose();
 									displayConfigScreen(room);
-								} else
+								} else {
 									JOptionPane.showMessageDialog(null, "There is no show with the given name", null,
 											JOptionPane.INFORMATION_MESSAGE, null);
-
+								}
 							}
 
 							else if (result == JOptionPane.NO_OPTION) {
 
-								String temp = (String) JOptionPane.showInputDialog(null,
+								String temp = JOptionPane.showInputDialog(null,
 										"How many positions should the entry go forward (+) or backward(-)",
 										JOptionPane.QUESTION_MESSAGE);
 								int offset = Integer.parseInt(temp);
 
 								if (schedule.moveEntry(e.getActionCommand(), offset)) {
-									// καλούμε ξανά την συνάρτηση για να ενημερωθεί το πρόγραμμα της αίθουσας της
-									// συγκεκριμένης ημερομηνίας με τις αλλαγές κ κλείνουμε το παλιό παράθυρο.
 									newframe.dispose();
 									displayConfigScreen(room);
 
-								} else
+								} else {
 									JOptionPane.showMessageDialog(null,
 											"The number of positions is out of range \n or there is already a show in the to be placed entry",
 											null, JOptionPane.INFORMATION_MESSAGE, null);
+								}
 							}
 
-						} else
+						} else {
 							JOptionPane.showMessageDialog(null, "No show has been registered yet", "Title",
 									JOptionPane.INFORMATION_MESSAGE);
+						}
 
 					}
 				});
@@ -741,7 +699,7 @@ public class AdminGUI extends JFrame implements Serializable {
 			}
 
 			Icon icon;
-			URL imageURL = getClass().getResource("images/calendar.jpg");
+			URL imageURL = AdminGUI.class.getClassLoader().getResource("images/Calendar.jpg");
 			JLabel forimage = new JLabel();
 			if (imageURL != null) {
 				icon = new ImageIcon(imageURL);

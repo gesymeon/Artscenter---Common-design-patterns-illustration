@@ -131,8 +131,8 @@ public abstract class Room implements Serializable {
 	private void initializeRows(int cap) {
 		int ascenting = 1;
 		Row temp;
-		while (cap / 10 > 0) {
-			temp = new PlainRow(cap % 10 > 0 ? 10 : cap, ascenting++);
+		while (cap > 0) {
+			temp = new PlainRow(cap > 10 ? 10 : cap, ascenting++);
 			cap -= 10;
 			rows.add(temp);
 		}

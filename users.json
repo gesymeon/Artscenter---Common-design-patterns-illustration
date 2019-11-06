@@ -151,6 +151,35 @@
             }
           }
         ]
+      ],
+      [
+        {
+          "type": "Play",
+          "properties": {
+            "genre": "Comedy",
+            "name": "nice",
+            "description": "good",
+            "actors": [
+              "depp",
+              "marializa"
+            ],
+            "director": "kalos",
+            "duration": 2.0,
+            "price": 0.0
+          }
+        },
+        [
+          {
+            "type": "PlainSeat",
+            "properties": {
+              "reserved": true,
+              "table": false,
+              "positionWithinRow": 1,
+              "id": 1,
+              "price": 5.0
+            }
+          }
+        ]
       ]
     ]
   }

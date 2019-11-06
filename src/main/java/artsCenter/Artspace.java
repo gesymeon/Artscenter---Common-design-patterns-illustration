@@ -124,7 +124,7 @@ public class Artspace implements Serializable {
 	 * Returns a room within the artspace based on its name.
 	 * 
 	 * @param name the name of the room within the artspace.
-	 * @return the room in case it exists, false otherwise.
+	 * @return the room in case it exists, null otherwise.
 	 */
 	public Room existingRoom(String name) {
 
