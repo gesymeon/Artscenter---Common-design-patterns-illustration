@@ -34,47 +34,6 @@
     ]
   },
   {
-    "name": "gs",
-    "telephone": "1",
-    "reservations": [
-      [
-        {
-          "type": "Movie",
-          "properties": {
-            "name": "drei",
-            "description": "bad",
-            "actors": [
-              "depp",
-              ""
-            ],
-            "director": "kubrik",
-            "duration": 3.0,
-            "price": 0.0
-          }
-        },
-        []
-      ],
-      [
-        {
-          "type": "Play",
-          "properties": {
-            "genre": "Comedy",
-            "name": "play it is",
-            "description": "good play",
-            "actors": [
-              "famous actor",
-              ""
-            ],
-            "director": "jorgic",
-            "duration": 2.0,
-            "price": 0.0
-          }
-        },
-        []
-      ]
-    ]
-  },
-  {
     "name": "tik",
     "telephone": "2",
     "reservations": [
@@ -119,6 +78,75 @@
               "table": false,
               "positionWithinRow": 2,
               "id": 2,
+              "price": 5.0
+            }
+          }
+        ]
+      ]
+    ]
+  },
+  {
+    "name": "gs",
+    "telephone": "1",
+    "reservations": [
+      [
+        {
+          "type": "Movie",
+          "properties": {
+            "name": "drei",
+            "description": "bad",
+            "actors": [
+              "depp",
+              ""
+            ],
+            "director": "kubrik",
+            "duration": 3.0,
+            "price": 0.0
+          }
+        },
+        []
+      ],
+      [
+        {
+          "type": "Play",
+          "properties": {
+            "genre": "Comedy",
+            "name": "play it is",
+            "description": "good play",
+            "actors": [
+              "famous actor",
+              ""
+            ],
+            "director": "jorgic",
+            "duration": 2.0,
+            "price": 0.0
+          }
+        },
+        []
+      ],
+      [
+        {
+          "type": "Movie",
+          "properties": {
+            "name": "spartacus",
+            "description": "good",
+            "actors": [
+              "depp",
+              ""
+            ],
+            "director": "kubrik",
+            "duration": 2.0,
+            "price": 0.0
+          }
+        },
+        [
+          {
+            "type": "PlainSeat",
+            "properties": {
+              "reserved": true,
+              "table": false,
+              "positionWithinRow": 1,
+              "id": 1,
               "price": 5.0
             }
           }

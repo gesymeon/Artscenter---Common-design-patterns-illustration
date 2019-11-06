@@ -24,6 +24,5 @@ public class PlainRow extends Row implements Serializable {
 	public Row deepCopy() {
 		return new PlainRow(this);
 	}
-	
-	
+
 }

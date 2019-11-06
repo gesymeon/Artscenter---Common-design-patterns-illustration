@@ -1,7 +1,6 @@
 
 package artsCenter;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -92,9 +91,9 @@ public class UserGUI extends JFrame {
 
 		this.user = user;
 		setTitle("User GUI");
-		setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		//in one screen configuration probably comment in
-		//frame.setUndecorated(true);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		// in one screen configuration probably comment in
+		// frame.setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JMenuBar menubar = new JMenuBar();
@@ -318,9 +317,8 @@ public class UserGUI extends JFrame {
 		URL imageURL = UserGUI.class.getClassLoader()
 				.getResource("images/" + entry.getShow().getClass().getSimpleName() + ".jpg");
 
-		
-		
-		final Icon icon = new ImageIcon (new ImageIcon(imageURL).getImage().getScaledInstance(600,400, Image.SCALE_DEFAULT));
+		final Icon icon = new ImageIcon(
+				new ImageIcon(imageURL).getImage().getScaledInstance(600, 400, Image.SCALE_DEFAULT));
 		label.setIcon(icon);
 
 		label.setFont(new Font("Serif", Font.PLAIN, 30));

@@ -66,8 +66,6 @@ public class EndUser {
 		return true;
 	}
 
-	
-	
 	public void saveAccount() throws IOException {
 
 		if (new File(RESOURCE_PATH).exists()) {

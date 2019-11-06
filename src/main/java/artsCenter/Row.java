@@ -40,7 +40,7 @@ public abstract class Row implements Serializable {
 	}
 
 	public abstract Row deepCopy();
-	
+
 	public List<Seat> getSeats() {
 		return seats;
 	}
@@ -69,7 +69,6 @@ public abstract class Row implements Serializable {
 			return false;
 		} else if (seats.get(position - 1) instanceof PlainSeat) {
 			lux = new LuxuriousSeat(seats.get(position - 1));
-			lux.setPrice(10.0);
 			seats.set(position - 1, lux);
 			return true;
 		}

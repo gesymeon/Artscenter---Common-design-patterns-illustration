@@ -3,8 +3,7 @@ package artsCenter;
 
 import java.io.Serializable;
 
-
-public abstract class Seat implements Serializable{
+public abstract class Seat implements Serializable {
 
 	private static final long serialVersionUID = -4796222305378801974L;
 	// used to id its seat uniquely.
@@ -36,8 +35,8 @@ public abstract class Seat implements Serializable{
 		id = source.getID();
 		price = source.getPrice();
 	}
-	
-    public abstract Seat deepCopy();
+
+	public abstract Seat deepCopy();
 
 	public double getPrice() {
 		return price;

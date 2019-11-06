@@ -13,16 +13,18 @@ public class Theater extends Room implements Serializable {
 	 * @param name theatre's name.
 	 * @param cap  theatre's capacity.
 	 * @throws java.text.ParseException
-	 * @throws CloneNotSupportedException 
+	 * @throws CloneNotSupportedException
 	 */
 	public Theater(String name, int capacity) throws ParseException, CloneNotSupportedException {
 		super(name, capacity);
 	}
 
-	
-	  @Override public String toString() { String description = super.toString();
-	  description += " Room type : Theatre"; return description; }
-	 
+	@Override
+	public String toString() {
+		String description = super.toString();
+		description += " Room type : Theatre";
+		return description;
+	}
 
 	@Override
 	protected RoomType getRoomType() {

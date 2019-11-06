@@ -2,13 +2,9 @@
 package artsCenter;
 
 import java.io.IOException;
-
-import java.io.Serializable;
 import java.text.ParseException;
 
-public class Administrator implements Serializable {
-
-	private static final long serialVersionUID = 3898723476777410594L;
+public class Administrator {
 
 	/**
 	 * Adds a new room to the artCenter.

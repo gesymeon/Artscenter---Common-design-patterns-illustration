@@ -19,7 +19,7 @@ import org.junit.runner.notification.RunListener.ThreadSafe;
 public class Artspace implements Serializable {
 
 	private static final long serialVersionUID = 8296538502299940605L;
-	List<Room> rooms;
+	private List<Room> rooms;
 
 	private static Artspace instance;
 
@@ -41,7 +41,7 @@ public class Artspace implements Serializable {
 
 	}
 
-	public static  void saveArtspace() throws IOException{
+	public static void saveArtspace() throws IOException {
 		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("artspace.bin"))) {
 			out.writeObject(instance);
 		}
@@ -63,17 +63,19 @@ public class Artspace implements Serializable {
 	 * @param roomType     the type of the room to be inserted in the artspace.
 	 * @return true if the insertion was successful, false otherwise.
 	 * @throws ParseException
-	 * @throws CloneNotSupportedException 
+	 * @throws CloneNotSupportedException
 	 */
-	public boolean createRoom(String roomName, int roomCapacity, RoomType roomType) throws ParseException, CloneNotSupportedException {
+	public boolean createRoom(String roomName, int roomCapacity, RoomType roomType)
+			throws ParseException, CloneNotSupportedException {
 		Room newRoom = null;
 		newRoom = roomFactory(roomName, roomCapacity, roomType);
 		// the comparison is done based on the rooms' names.
 		if (newRoom != null && !rooms.contains(newRoom)) {
 			rooms.add(newRoom);
 			return true;
-		} else
+		} else {
 			return false;
+		}
 	}
 
 	/**
@@ -84,9 +86,10 @@ public class Artspace implements Serializable {
 	 * @param roomtype     the type of the room to be inserted in the artspace.
 	 * @return the newly created room.
 	 * @throws ParseException
-	 * @throws CloneNotSupportedException 
+	 * @throws CloneNotSupportedException
 	 */
-	protected Room roomFactory(String roomName, int roomCapacity, RoomType roomType) throws ParseException, CloneNotSupportedException {
+	protected Room roomFactory(String roomName, int roomCapacity, RoomType roomType)
+			throws ParseException, CloneNotSupportedException {
 		Room newRoom = null;
 
 		if (roomType == RoomType.Cinema) {

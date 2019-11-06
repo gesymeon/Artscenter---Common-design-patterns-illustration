@@ -47,7 +47,8 @@ public class ScheduleEntry implements Serializable {
 		return result;
 	}
 
-	// the equality of two entries depends only on the names of the shows they contain
+	// the equality of two entries depends only on the names of the shows they
+	// contain
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {

@@ -3,7 +3,7 @@ package artsCenter;
 
 import java.io.Serializable;
 
-public class LuxuriousSeat extends Seat implements Serializable{
+public class LuxuriousSeat extends Seat implements Serializable {
 
 	private static final long serialVersionUID = 2715665732506243269L;
 
@@ -18,18 +18,17 @@ public class LuxuriousSeat extends Seat implements Serializable{
 
 	public LuxuriousSeat(Seat s) {
 		super(s);
+		setPrice(10.0);
 	}
 
 	@Override
 	public Seat deepCopy() {
 		return new LuxuriousSeat(this);
 	}
-	
-	
+
 	@Override
 	public boolean isLuxurious() {
 		return true;
 	}
-
 
 }

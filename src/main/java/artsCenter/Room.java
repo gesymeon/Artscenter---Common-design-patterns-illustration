@@ -11,9 +11,8 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
-public abstract class Room implements Serializable{
+public abstract class Room implements Serializable {
 
 	private static final long serialVersionUID = -1708615501951868346L;
 	protected String name;
@@ -75,8 +74,8 @@ public abstract class Room implements Serializable{
 		return result;
 	}
 
-	//equality is based  on room's name and type
-	
+	// equality is based on room's name and type
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -113,7 +112,6 @@ public abstract class Room implements Serializable{
 		String date;
 		Date today = new Date();
 		String todayString = sdf.format(today);
-
 		Calendar c = Calendar.getInstance();
 		c.setTime(sdf.parse(todayString));
 		for (int i = 0; i < 10; i++) {
@@ -133,16 +131,12 @@ public abstract class Room implements Serializable{
 	private void initializeRows(int cap) {
 		int ascenting = 1;
 		Row temp;
-		while (cap > 10) {
-			temp = new PlainRow(10, ascenting++);
+		while (cap / 10 > 0) {
+			temp = new PlainRow(cap % 10 > 0 ? 10 : cap, ascenting++);
 			cap -= 10;
 			rows.add(temp);
 		}
-		// TODO: normally this if is not needed, i should test
-		if (cap > 0) {
-			temp = new PlainRow(cap, ascenting);
-			rows.add(temp);
-		}
+
 	}
 
 	/**
@@ -159,7 +153,6 @@ public abstract class Room implements Serializable{
 		// quality.
 		rows.get(row - 1).makeLuxurious(seat);
 
-		// TODO: test if it really works
 		for (Map.Entry<String, Schedule> entry : schedules.entrySet()) {
 			Schedule schedule = entry.getValue();
 			for (ScheduleEntry e : schedule.getEntries()) {
@@ -355,7 +348,8 @@ public abstract class Room implements Serializable{
 		return null;
 	}
 
-	// Probably better if a third class had been used to perform this and similar checks.
+	// Probably better if a third class had been used to perform this and similar
+	// checks.
 	/**
 	 * Restricts the inclusion of shows to facilities when their types are
 	 * incompatible.
