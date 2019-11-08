@@ -22,6 +22,9 @@ public abstract class Room implements Serializable {
 	// the key is a specific date, and its value is the corresponding date's
 	// schedule.
 	protected LinkedHashMap<String, Schedule> schedules;
+	
+	private List<RowsObserver> observers;
+
 
 	/**
 	 * Creates a room with a specific name and capacity.
@@ -31,14 +34,15 @@ public abstract class Room implements Serializable {
 	 * @throws java.text.ParseException
 	 * @throws CloneNotSupportedException
 	 */
-	public Room(String name, int capacity) throws ParseException, CloneNotSupportedException {
+	public Room(String name, int capacity) throws ParseException {
+		
 		this.name = name;
 		this.capacity = capacity;
+		observers = new ArrayList<>();
 		rows = new ArrayList<>();
 		schedules = new LinkedHashMap<>();
 		initializeRows(capacity);
 		initializeSchedules();
-
 	}
 
 	public Map<String, Schedule> getSchedules() {
@@ -101,13 +105,17 @@ public abstract class Room implements Serializable {
 		return true;
 	}
 
+	
+
+    
+    
 	/**
 	 * adds a schedule for each of the ten following days (excluding today). By
 	 * default the schedule starts from 12 a.m up until 12 p.m
 	 * 
 	 * @throws CloneNotSupportedException
 	 */
-	private void initializeSchedules() throws ParseException, CloneNotSupportedException {
+	private void initializeSchedules() throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		String date;
 		Date today = new Date();
@@ -117,7 +125,9 @@ public abstract class Room implements Serializable {
 		for (int i = 0; i < 10; i++) {
 			c.add(Calendar.DATE, 1);
 			date = sdf.format(c.getTime());
-			schedules.put(date, new Schedule(12, 24, rows));
+			Schedule schedule = new Schedule(12, 24, rows);
+			schedule.getEntries().forEach(entry -> observers.add(entry));
+			schedules.put(date, schedule);
 		}
 	}
 
@@ -136,7 +146,6 @@ public abstract class Room implements Serializable {
 			cap -= 10;
 			rows.add(temp);
 		}
-
 	}
 
 	/**
@@ -177,6 +186,8 @@ public abstract class Room implements Serializable {
 			}
 		}
 
+		updateObservers();
+		
 	}
 
 	/**
@@ -201,12 +212,13 @@ public abstract class Room implements Serializable {
 	 * @return true if the addition is completed correctly, false otherwise.
 	 * @throws CloneNotSupportedException
 	 */
-	public boolean addSchedule(String date) throws CloneNotSupportedException {
+	public boolean addSchedule(String date) {
 		Schedule temp = getSchedule(date);
 		if (temp != null)
 			return false;
 		else {
 			Schedule schedule = new Schedule(12, 24, rows);
+			schedule.getEntries().forEach(entry -> observers.add(entry));
 			schedules.put(date, schedule);
 			return true;
 		}
@@ -227,6 +239,14 @@ public abstract class Room implements Serializable {
 			return true;
 		}
 	}
+	
+	
+	private void updateObservers() {
+		
+		for(RowsObserver obs : observers)
+			obs.updateRows(rows);
+	}
+	
 
 	/**
 	 * Adds a new row in the room.
@@ -240,7 +260,9 @@ public abstract class Room implements Serializable {
 			rows.add(new LuxuriousRow(capacity, rows.get(rows.size() - 1).getIndex() + 1));
 		else
 			rows.add(new PlainRow(capacity, rows.get(rows.size() - 1).getIndex() + 1));
-
+		
+		updateObservers();
+		
 	}
 
 	/**
@@ -269,7 +291,7 @@ public abstract class Room implements Serializable {
 	 * @return true if the addition is completed successfully, false otherwise.
 	 * @throws CloneNotSupportedException
 	 */
-	public boolean addShow(Show show, String date) throws CloneNotSupportedException {
+	public boolean addShow(Show show, String date) {
 
 		if (!checkCompatibility(show))
 			return false;
@@ -280,6 +302,7 @@ public abstract class Room implements Serializable {
 		} else {
 			Schedule schedule = new Schedule(12, 24, rows);
 			schedule.addEntry(show);
+			schedule.getEntries().forEach(entry -> observers.add(entry));
 			schedules.put(date, schedule);
 
 		}

@@ -470,13 +470,17 @@ public class AdminGUI extends JFrame {
 			date = JOptionPane.showInputDialog(null, "Please give the date when the show will take place",
 					JOptionPane.QUESTION_MESSAGE);
 
-			if (room.addShow(show, date))
-				JOptionPane.showMessageDialog(null, "The addition was completed succesfully", null,
-						JOptionPane.INFORMATION_MESSAGE, null);
-			else
-				JOptionPane.showMessageDialog(null,
-						"The schedule for the specific date is full or the show has already been added", null,
-						JOptionPane.INFORMATION_MESSAGE, null);
+			try {
+				if (room.addShow(show, date))
+					JOptionPane.showMessageDialog(null, "The addition was completed succesfully", null,
+							JOptionPane.INFORMATION_MESSAGE, null);
+				else
+					JOptionPane.showMessageDialog(null,
+							"The schedule for the specific date is full or the show has already been added", null,
+							JOptionPane.INFORMATION_MESSAGE, null);
+			} catch (HeadlessException | CloneNotSupportedException e) {
+				System.out.println("toLogger");
+			}
 		} else {
 			JOptionPane.showMessageDialog(null, "The room where the show would be added was not found", null,
 					JOptionPane.INFORMATION_MESSAGE, null);
@@ -499,14 +503,12 @@ public class AdminGUI extends JFrame {
 				JOptionPane.showMessageDialog(null, "The show was deleted successfully", null,
 						JOptionPane.INFORMATION_MESSAGE, null);
 			} else {
-				JOptionPane.showMessageDialog(null,
-						"An error occured during the show's deletion",
-						null, JOptionPane.ERROR_MESSAGE, null);
+				JOptionPane.showMessageDialog(null, "An error occured during the show's deletion", null,
+						JOptionPane.ERROR_MESSAGE, null);
 			}
 		} else {
-			JOptionPane.showMessageDialog(null,
-					"There is no room with the given show on the given date's schedule", null,
-					JOptionPane.INFORMATION_MESSAGE, null);
+			JOptionPane.showMessageDialog(null, "There is no room with the given show on the given date's schedule",
+					null, JOptionPane.INFORMATION_MESSAGE, null);
 		}
 
 	}
@@ -541,7 +543,7 @@ public class AdminGUI extends JFrame {
 					else
 						JOptionPane.showMessageDialog(null, "There is already a schedule for the given date", null,
 								JOptionPane.INFORMATION_MESSAGE, null);
-				} catch (NullPointerException ex) {
+				} catch (NullPointerException | HeadlessException | CloneNotSupportedException ex) {
 					System.out.println("toLogger");
 				}
 

@@ -17,18 +17,20 @@ public class ScheduleEntry implements Serializable, RowsObserver {
 	// entry's structure do not affect other schedules' entries.
 	private List<Row> rows;
 
+	
+	/*
+	 * public ScheduleEntry(float startingTime, float finishingTime) {
+	 * this.startingTime = startingTime; this.finishingTime = finishingTime; rows =
+	 * new ArrayList<>(); }
+	 */
+	
 	/**
-	 * Initializes an empty entry with its corresponding operating time interval.
+	 * Initializes an entry with its corresponding operating time interval.
 	 * 
 	 * @param startingTime  The entry's show starting time.
 	 * @param finishingTime The entry's show finishing time.
+	 * @param rows The room's rows, whose structure the entry's rows must reflect.
 	 */
-	public ScheduleEntry(float startingTime, float finishingTime) {
-		this.startingTime = startingTime;
-		this.finishingTime = finishingTime;
-		rows = new ArrayList<>();
-	}
-
 	public ScheduleEntry(float startingTime, float finishingTime, List<Row> rows) {
 		this.startingTime = startingTime;
 		this.finishingTime = finishingTime;
