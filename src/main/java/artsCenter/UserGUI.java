@@ -24,14 +24,23 @@ public class UserGUI extends JFrame {
 		} catch (IOException ex) {
 			JOptionPane.showMessageDialog(null, "The artspace must have already been created by the administrator",
 					null, JOptionPane.ERROR_MESSAGE, null);
+			System.exit(ERROR);
 		} catch (ClassNotFoundException ex) {
 			JOptionPane.showMessageDialog(null, "Missing data from artspace's class in .jar file", null,
 					JOptionPane.ERROR_MESSAGE, null);
+			System.exit(ERROR);
 		}
 
 		String name = JOptionPane.showInputDialog("Username: ");
-		while (name.equals(""))
-			name = JOptionPane.showInputDialog("It is mandatory...");
+		if (name == null)
+			System.exit(0);
+		if (name.equals("")) {
+			do {
+				name = JOptionPane.showInputDialog("It is mandatory...");
+				if (name == null)
+					System.exit(0);
+			} while (name.equals(""));
+		}
 
 		Object[] options = { "Yes", "'No", "Cancel" };
 		int result = JOptionPane.showOptionDialog(null, "Do you have an account;", "Basic question",

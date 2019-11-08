@@ -36,54 +36,7 @@
   {
     "name": "tik",
     "telephone": "2",
-    "reservations": [
-      [
-        {
-          "type": "Movie",
-          "properties": {
-            "name": "drei",
-            "description": "bad",
-            "actors": [
-              "depp",
-              ""
-            ],
-            "director": "kubrik",
-            "duration": 3.0,
-            "price": 0.0
-          }
-        },
-        []
-      ],
-      [
-        {
-          "type": "Play",
-          "properties": {
-            "genre": "Comedy",
-            "name": "play it is",
-            "description": "good play",
-            "actors": [
-              "famous actor",
-              ""
-            ],
-            "director": "jorgic",
-            "duration": 2.0,
-            "price": 0.0
-          }
-        },
-        [
-          {
-            "type": "PlainSeat",
-            "properties": {
-              "reserved": true,
-              "table": false,
-              "positionWithinRow": 2,
-              "id": 2,
-              "price": 5.0
-            }
-          }
-        ]
-      ]
-    ]
+    "reservations": {}
   },
   {
     "name": "gs",
@@ -176,6 +129,194 @@
               "table": false,
               "positionWithinRow": 1,
               "id": 1,
+              "price": 5.0
+            }
+          }
+        ]
+      ],
+      [
+        {
+          "type": "Movie",
+          "properties": {
+            "name": "bad movie",
+            "description": "cool",
+            "actors": [
+              "depp",
+              ""
+            ],
+            "director": "kubrik",
+            "duration": 2.0,
+            "price": 0.0
+          }
+        },
+        [
+          {
+            "type": "PlainSeat",
+            "properties": {
+              "reserved": true,
+              "table": false,
+              "positionWithinRow": 3,
+              "id": 13,
+              "price": 5.0
+            }
+          }
+        ]
+      ],
+      [
+        {
+          "type": "Movie",
+          "properties": {
+            "name": "testing",
+            "description": "dg",
+            "actors": [
+              "ju",
+              ""
+            ],
+            "director": "djf",
+            "duration": 1.0,
+            "price": 0.0
+          }
+        },
+        [
+          {
+            "type": "LuxuriousSeat",
+            "properties": {
+              "reserved": true,
+              "table": true,
+              "positionWithinRow": 7,
+              "id": 52,
+              "price": 10.0
+            }
+          },
+          {
+            "type": "PlainSeat",
+            "properties": {
+              "reserved": true,
+              "table": false,
+              "positionWithinRow": 10,
+              "id": 40,
+              "price": 5.0
+            }
+          },
+          {
+            "type": "LuxuriousSeat",
+            "properties": {
+              "reserved": true,
+              "table": true,
+              "positionWithinRow": 5,
+              "id": 5,
+              "price": 10.0
+            }
+          }
+        ]
+      ],
+      [
+        {
+          "type": "Movie",
+          "properties": {
+            "name": "sdgj",
+            "description": "wogj",
+            "actors": [
+              "dfopj",
+              ""
+            ],
+            "director": "dsipfh",
+            "duration": 1.0,
+            "price": 0.0
+          }
+        },
+        [
+          {
+            "type": "PlainSeat",
+            "properties": {
+              "reserved": true,
+              "table": false,
+              "positionWithinRow": 7,
+              "id": 17,
+              "price": 5.0
+            }
+          }
+        ]
+      ],
+      [
+        {
+          "type": "Movie",
+          "properties": {
+            "name": "mov1",
+            "description": "asfg",
+            "actors": [
+              "sd",
+              ""
+            ],
+            "director": "df",
+            "duration": 2.0,
+            "price": 0.0
+          }
+        },
+        [
+          {
+            "type": "PlainSeat",
+            "properties": {
+              "reserved": true,
+              "table": false,
+              "positionWithinRow": 1,
+              "id": 1,
+              "price": 5.0
+            }
+          }
+        ]
+      ],
+      [
+        {
+          "type": "Movie",
+          "properties": {
+            "name": "wg",
+            "description": "rgj",
+            "actors": [
+              "fw",
+              ""
+            ],
+            "director": "wfg",
+            "duration": 3.0,
+            "price": 0.0
+          }
+        },
+        [
+          {
+            "type": "PlainSeat",
+            "properties": {
+              "reserved": true,
+              "table": false,
+              "positionWithinRow": 2,
+              "id": 2,
+              "price": 5.0
+            }
+          }
+        ]
+      ],
+      [
+        {
+          "type": "Movie",
+          "properties": {
+            "name": "adho",
+            "description": "23",
+            "actors": [
+              "adif",
+              ""
+            ],
+            "director": "wehd",
+            "duration": 3.0,
+            "price": 0.0
+          }
+        },
+        [
+          {
+            "type": "PlainSeat",
+            "properties": {
+              "reserved": true,
+              "table": false,
+              "positionWithinRow": 4,
+              "id": 94,
               "price": 5.0
             }
           }

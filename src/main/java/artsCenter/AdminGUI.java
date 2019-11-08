@@ -252,35 +252,32 @@ public class AdminGUI extends JFrame {
 		addrow.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String roomName = JOptionPane.showInputDialog(null,
-							"Please give the name of the room where the addition will take place",
-							JOptionPane.QUESTION_MESSAGE);
 
+				String roomName = JOptionPane.showInputDialog(null,
+						"Please give the name of the room where the addition will take place",
+						JOptionPane.QUESTION_MESSAGE);
+
+				Room found = null;
+				if ((found = workspace.existingRoom(roomName)) != null) {
 					int capacity = Integer.parseInt(JOptionPane.showInputDialog(null,
 							"Please give the number of the seats within the row", JOptionPane.QUESTION_MESSAGE));
 
 					boolean luxurious = Boolean.parseBoolean(JOptionPane.showInputDialog(null,
 							"Will the seat be luxurious (true or false)", JOptionPane.QUESTION_MESSAGE));
 
-					Room found = workspace.existingRoom(roomName);
-
 					found.addRow(capacity, luxurious);
-
-				} catch (NullPointerException ex) {
-					JOptionPane.showMessageDialog(null, "There was no room found with the given name", null,
-							JOptionPane.ERROR_MESSAGE, null);
+				} else {
+					JOptionPane.showMessageDialog(null, "No room with the given name was found", null,
+							JOptionPane.INFORMATION_MESSAGE, null);
 				}
+
 			}
 
 		});
 
 		createShowMenu();
-
 		createScheduleMenu();
-
 		setJMenuBar(menubar);
-
 		pack();
 		setVisible(true);
 	}
@@ -309,7 +306,7 @@ public class AdminGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					addShow(e.getActionCommand());
-				} catch (HeadlessException | CloneNotSupportedException ex) {
+				} catch (HeadlessException ex) {
 					System.out.println("toLogger");
 				}
 			}
@@ -321,7 +318,7 @@ public class AdminGUI extends JFrame {
 
 				try {
 					addShow(e.getActionCommand());
-				} catch (HeadlessException | CloneNotSupportedException ex) {
+				} catch (HeadlessException ex) {
 
 				}
 			}
@@ -390,10 +387,9 @@ public class AdminGUI extends JFrame {
 	 * 
 	 * @throws IOException
 	 * @throws ClassNotFoundException
-	 * @throws CloneNotSupportedException
 	 * @throws HeadlessException
 	 */
-	private void addShow(String actionCommand) throws CloneNotSupportedException {
+	private void addShow(String actionCommand) {
 
 		PlayType genre;
 		String showName;
@@ -545,7 +541,7 @@ public class AdminGUI extends JFrame {
 					else
 						JOptionPane.showMessageDialog(null, "There is already a schedule for the given date", null,
 								JOptionPane.INFORMATION_MESSAGE, null);
-				} catch (NullPointerException | HeadlessException | CloneNotSupportedException ex) {
+				} catch (NullPointerException ex) {
 					System.out.println("toLogger");
 				}
 

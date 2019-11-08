@@ -35,5 +35,12 @@ public class Administrator {
 	public boolean deleteRoom(String roomName) throws ClassNotFoundException, IOException {
 		return Artspace.getInstance().deleteRoom(roomName);
 	}
+	
+	
+	public boolean existingRoom(String roomName)
+			throws ClassNotFoundException, IOException{
+		return Artspace.getInstance().existingRoom(roomName) != null ;
+	}
+	
 
 }

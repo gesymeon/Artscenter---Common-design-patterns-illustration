@@ -1,10 +1,13 @@
 
 package artsCenter;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class Schedule implements Serializable {
 
@@ -30,31 +33,28 @@ public class Schedule implements Serializable {
 	 * on the total time the room is operational and the number of shows to be
 	 * performed within it each day.
 	 * 
-	 * 
-	 * 
 	 * @param time_start The start time of the room/schedule.
 	 * @param time_close The closing time of the room/schedule.
 	 */
 
-	public Schedule(int timeStart, int timeClose, List<Row> rows) throws CloneNotSupportedException {
+	public Schedule(int timeStart, int timeClose, List<Row> rows) {
 		openingTime = timeStart;
 		closingTime = timeClose;
 
 		calculateMaximumEntries(closingTime - openingTime);
 		entries = new ArrayList<>();
 		createEntries(rows);
-
 	}
 
-	public void createEntries(List<Row> rows) throws CloneNotSupportedException {
+	public void createEntries(List<Row> rows) {
 		int temp;
 		for (int i = 0; i < maximumEntries; i++) {
 			temp = openingTime + entries.size() * INTERVAL;
 			ScheduleEntry entry = new ScheduleEntry(temp, temp + INTERVAL, rows);
 			entries.add(entry);
 		}
-
 	}
+	
 
 	/**
 	 * Calculates the total maximum number of entries within the schedule.
@@ -62,9 +62,7 @@ public class Schedule implements Serializable {
 	 * @param total the total time the schedule takes to be completed.
 	 */
 	private void calculateMaximumEntries(int total) {
-
 		maximumEntries = total / INTERVAL;
-
 	}
 
 	/**

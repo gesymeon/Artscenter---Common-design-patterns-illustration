@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ScheduleEntry implements Serializable {
+public class ScheduleEntry implements Serializable, RowsObserver {
 
 	private static final long serialVersionUID = 4231857028633854264L;
 	private Show show;
@@ -84,6 +84,11 @@ public class ScheduleEntry implements Serializable {
 
 	}
 
+	@Override
+	public void updateRows(List<Row> rows) {
+		setRows(rows);
+	}
+
 	public List<Row> getRows() {
 		return rows;
 	}
@@ -110,6 +115,26 @@ public class ScheduleEntry implements Serializable {
 
 	public void setFinishingTime(float time) {
 		finishingTime = time;
+	}
+
+	public void setRows(List<Row> rows) {
+			
+		int rowDifference = Math.abs(this.rows.size() - rows.size());
+		
+			while( rowDifference > 0  ) {
+				
+				this.rows.remove( this.rows.get(this.rows.size()-rowDifference) );
+				--rowDifference;
+				
+			}
+			
+			while( rowDifference < 0 ){
+				
+				this.rows.add( rows.get(rows.size()-rowDifference).deepCopy() );
+				--rowDifference;
+			}
+			
+			
 	}
 
 	/**
