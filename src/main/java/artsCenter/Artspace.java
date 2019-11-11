@@ -27,12 +27,12 @@ public class Artspace implements Serializable {
 		rooms = new ArrayList<>();
 	}
 
-	public static synchronized Artspace getInstance() throws IOException, ClassNotFoundException {
+	public static synchronized Artspace getInstance(){
 
 		if (instance == null)
 			try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("artspace.bin"))) {
 				instance = ((Artspace) in.readObject());
-			} catch (FileNotFoundException e) {
+			} catch (IOException e) {
 				instance = new Artspace();
 			} catch (ClassNotFoundException e) {
 				System.err.println("toLogger");
@@ -91,13 +91,11 @@ public class Artspace implements Serializable {
 	protected Room roomFactory(String roomName, int roomCapacity, RoomType roomType)
 			throws ParseException, CloneNotSupportedException {
 		Room newRoom = null;
-
 		if (roomType == RoomType.Cinema) {
 			newRoom = new Cinema(roomName, roomCapacity);
 		} else if (roomType == RoomType.Theater) {
 			newRoom = new Theater(roomName, roomCapacity);
 		}
-
 		return newRoom;
 	}
 
@@ -108,9 +106,7 @@ public class Artspace implements Serializable {
 	 * @return true if the deletion is successful, false otherwise.
 	 */
 	public boolean deleteRoom(String name) {
-
 		Iterator<Room> it = rooms.iterator();
-
 		while (it.hasNext()) {
 			if (it.next().getName().equals(name)) {
 				it.remove();
@@ -127,7 +123,6 @@ public class Artspace implements Serializable {
 	 * @return the room in case it exists, null otherwise.
 	 */
 	public Room existingRoom(String name) {
-
 		for (Room room : rooms) {
 			if (room.getName().equals(name))
 				return room;

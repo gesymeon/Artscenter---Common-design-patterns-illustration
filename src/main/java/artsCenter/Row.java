@@ -10,11 +10,11 @@ public abstract class Row implements Serializable {
 	private static final long serialVersionUID = -4303470249348527557L;
 
 	// The row's index (incremental number) inside a room.
-	protected int index;
-
+	private int index;
+	private int numberOfSeats;
+	
 	protected ArrayList<Seat> seats;
 
-	protected int numberOfSeats;
 
 	/**
 	 * 

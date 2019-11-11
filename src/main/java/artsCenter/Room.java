@@ -15,13 +15,13 @@ import java.util.Map;
 public abstract class Room implements Serializable {
 
 	private static final long serialVersionUID = -1708615501951868346L;
-	protected String name;
-	protected int capacity;
-	protected List<Row> rows;
+	private String name;
+	private int capacity;
+	private List<Row> rows;
 
 	// the key is a specific date, and its value is the corresponding date's
 	// schedule.
-	protected LinkedHashMap<String, Schedule> schedules;
+	private LinkedHashMap<String, Schedule> schedules;
 
 	private List<RowsObserver> observers;
 
@@ -333,10 +333,8 @@ public abstract class Room implements Serializable {
 	 * @return true if the swapping is successful, false otherwise.
 	 */
 	public boolean swapShows(String name1, String name2, String date) {
-
 		Schedule temp = schedules.get(date);
 		return temp.swapEntries(name1, name2);
-
 	}
 
 	/**
@@ -348,7 +346,6 @@ public abstract class Room implements Serializable {
 	 * 
 	 */
 	public Show getShow(String name) {
-
 		for (Map.Entry<String, Schedule> entry : schedules.entrySet()) {
 			Schedule value = entry.getValue();
 			ScheduleEntry temp = value.contains(name);

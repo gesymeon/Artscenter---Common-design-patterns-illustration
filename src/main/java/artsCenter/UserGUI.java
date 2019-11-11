@@ -19,17 +19,7 @@ public class UserGUI extends JFrame {
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 
-		try {
-			Artspace.getInstance();
-		} catch (IOException ex) {
-			JOptionPane.showMessageDialog(null, "The artspace must have already been created by the administrator",
-					null, JOptionPane.ERROR_MESSAGE, null);
-			System.exit(ERROR);
-		} catch (ClassNotFoundException ex) {
-			JOptionPane.showMessageDialog(null, "Missing data from artspace's class in .jar file", null,
-					JOptionPane.ERROR_MESSAGE, null);
-			System.exit(ERROR);
-		}
+		Artspace.getInstance();
 
 		String name = JOptionPane.showInputDialog("Username: ");
 		if (name == null)
@@ -61,7 +51,7 @@ public class UserGUI extends JFrame {
 					System.exit(0);
 				}
 			} catch (IOException ex) {
-				JOptionPane.showMessageDialog(null, "Input error while reading data from disk", null,
+				JOptionPane.showMessageDialog(null, "Input error while reading users data from disk", null,
 						JOptionPane.ERROR_MESSAGE, null);
 			} catch (ClassNotFoundException ex) {
 				JOptionPane.showMessageDialog(null, "Missing data from .jar file about the application's classes", null,
@@ -79,9 +69,13 @@ public class UserGUI extends JFrame {
 					String phone = JOptionPane.showInputDialog("Input your phone number : ");
 					new UserGUI(new EndUser(name, phone));
 				}
+				// file users.json does not exist
 			} catch (IOException ex) {
-				JOptionPane.showMessageDialog(null, "Input error while reading data from disk", null,
-						JOptionPane.ERROR_MESSAGE, null);
+				// TODO: regex to have a valid phone number format
+				String phone = JOptionPane.showInputDialog("Input your phone number : ");
+				EndUser firstRegisteredUser = new EndUser(name, phone);
+				firstRegisteredUser.saveAccount();
+				new UserGUI(firstRegisteredUser);
 			}
 		}
 

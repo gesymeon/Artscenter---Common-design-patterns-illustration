@@ -44,7 +44,7 @@ public class RoomTest {
 	public void testMakeLuxurious() {
 		cinema.addShow(movie, defaultDate);
 		cinema.makeLuxurious(1, 1);
-		assertTrue(cinema.rows.get(0).getSeat(1).isLuxurious());
+		assertTrue(cinema.getRows().get(0).getSeat(1).isLuxurious());
 		for (Map.Entry<String, Schedule> entry : cinema.getSchedules().entrySet()) {
 			Schedule schedule = entry.getValue();
 			for (ScheduleEntry e : schedule.getEntries()) {

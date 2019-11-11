@@ -22,7 +22,7 @@ public class Theater extends Room implements Serializable {
 	@Override
 	public String toString() {
 		String description = super.toString();
-		description += " Room type : Theatre";
+		description += " Room Type : Theatre";
 		return description;
 	}
 

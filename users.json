@@ -1,16 +1,17 @@
 [
   {
-    "name": "jake",
-    "telephone": "12",
+    "name": "gs",
+    "telephone": "1",
     "reservations": [
       [
         {
           "type": "Movie",
           "properties": {
-            "name": "drei",
-            "description": "bad",
+            "name": "spartacus",
+            "description": "good movie",
             "actors": [
-              "depp",
+              "famous actor 3",
+              "famous actress 6",
               ""
             ],
             "director": "kubrik",
@@ -24,8 +25,8 @@
             "properties": {
               "reserved": true,
               "table": false,
-              "positionWithinRow": 5,
-              "id": 5,
+              "positionWithinRow": 2,
+              "id": 12,
               "price": 5.0
             }
           }
@@ -34,250 +35,22 @@
     ]
   },
   {
-    "name": "tik",
+    "name": "test_user",
     "telephone": "2",
-    "reservations": {}
-  },
-  {
-    "name": "gs",
-    "telephone": "1",
     "reservations": [
       [
         {
-          "type": "Movie",
-          "properties": {
-            "name": "drei",
-            "description": "bad",
-            "actors": [
-              "depp",
-              ""
-            ],
-            "director": "kubrik",
-            "duration": 3.0,
-            "price": 0.0
-          }
-        },
-        []
-      ],
-      [
-        {
           "type": "Play",
           "properties": {
             "genre": "Comedy",
-            "name": "play it is",
+            "name": "othello",
             "description": "good play",
             "actors": [
-              "famous actor",
-              ""
+              "famous actor 1",
+              "famous actress 1"
             ],
-            "director": "jorgic",
+            "director": "famous director 1",
             "duration": 2.0,
-            "price": 0.0
-          }
-        },
-        []
-      ],
-      [
-        {
-          "type": "Movie",
-          "properties": {
-            "name": "spartacus",
-            "description": "good",
-            "actors": [
-              "depp",
-              ""
-            ],
-            "director": "kubrik",
-            "duration": 2.0,
-            "price": 0.0
-          }
-        },
-        [
-          {
-            "type": "PlainSeat",
-            "properties": {
-              "reserved": true,
-              "table": false,
-              "positionWithinRow": 1,
-              "id": 1,
-              "price": 5.0
-            }
-          }
-        ]
-      ],
-      [
-        {
-          "type": "Play",
-          "properties": {
-            "genre": "Comedy",
-            "name": "nice",
-            "description": "good",
-            "actors": [
-              "depp",
-              "marializa"
-            ],
-            "director": "kalos",
-            "duration": 2.0,
-            "price": 0.0
-          }
-        },
-        [
-          {
-            "type": "PlainSeat",
-            "properties": {
-              "reserved": true,
-              "table": false,
-              "positionWithinRow": 1,
-              "id": 1,
-              "price": 5.0
-            }
-          }
-        ]
-      ],
-      [
-        {
-          "type": "Movie",
-          "properties": {
-            "name": "bad movie",
-            "description": "cool",
-            "actors": [
-              "depp",
-              ""
-            ],
-            "director": "kubrik",
-            "duration": 2.0,
-            "price": 0.0
-          }
-        },
-        [
-          {
-            "type": "PlainSeat",
-            "properties": {
-              "reserved": true,
-              "table": false,
-              "positionWithinRow": 3,
-              "id": 13,
-              "price": 5.0
-            }
-          }
-        ]
-      ],
-      [
-        {
-          "type": "Movie",
-          "properties": {
-            "name": "testing",
-            "description": "dg",
-            "actors": [
-              "ju",
-              ""
-            ],
-            "director": "djf",
-            "duration": 1.0,
-            "price": 0.0
-          }
-        },
-        [
-          {
-            "type": "LuxuriousSeat",
-            "properties": {
-              "reserved": true,
-              "table": true,
-              "positionWithinRow": 7,
-              "id": 52,
-              "price": 10.0
-            }
-          },
-          {
-            "type": "PlainSeat",
-            "properties": {
-              "reserved": true,
-              "table": false,
-              "positionWithinRow": 10,
-              "id": 40,
-              "price": 5.0
-            }
-          },
-          {
-            "type": "LuxuriousSeat",
-            "properties": {
-              "reserved": true,
-              "table": true,
-              "positionWithinRow": 5,
-              "id": 5,
-              "price": 10.0
-            }
-          }
-        ]
-      ],
-      [
-        {
-          "type": "Movie",
-          "properties": {
-            "name": "sdgj",
-            "description": "wogj",
-            "actors": [
-              "dfopj",
-              ""
-            ],
-            "director": "dsipfh",
-            "duration": 1.0,
-            "price": 0.0
-          }
-        },
-        [
-          {
-            "type": "PlainSeat",
-            "properties": {
-              "reserved": true,
-              "table": false,
-              "positionWithinRow": 7,
-              "id": 17,
-              "price": 5.0
-            }
-          }
-        ]
-      ],
-      [
-        {
-          "type": "Movie",
-          "properties": {
-            "name": "mov1",
-            "description": "asfg",
-            "actors": [
-              "sd",
-              ""
-            ],
-            "director": "df",
-            "duration": 2.0,
-            "price": 0.0
-          }
-        },
-        [
-          {
-            "type": "PlainSeat",
-            "properties": {
-              "reserved": true,
-              "table": false,
-              "positionWithinRow": 1,
-              "id": 1,
-              "price": 5.0
-            }
-          }
-        ]
-      ],
-      [
-        {
-          "type": "Movie",
-          "properties": {
-            "name": "wg",
-            "description": "rgj",
-            "actors": [
-              "fw",
-              ""
-            ],
-            "director": "wfg",
-            "duration": 3.0,
             "price": 0.0
           }
         },
@@ -288,177 +61,7 @@
               "reserved": true,
               "table": false,
               "positionWithinRow": 2,
-              "id": 2,
-              "price": 5.0
-            }
-          }
-        ]
-      ],
-      [
-        {
-          "type": "Movie",
-          "properties": {
-            "name": "adho",
-            "description": "23",
-            "actors": [
-              "adif",
-              ""
-            ],
-            "director": "wehd",
-            "duration": 3.0,
-            "price": 0.0
-          }
-        },
-        [
-          {
-            "type": "PlainSeat",
-            "properties": {
-              "reserved": true,
-              "table": false,
-              "positionWithinRow": 4,
-              "id": 94,
-              "price": 5.0
-            }
-          }
-        ]
-      ],
-      [
-        {
-          "type": "Movie",
-          "properties": {
-            "name": "wrgj",
-            "description": "sdg",
-            "actors": [
-              "jsdf",
-              ""
-            ],
-            "director": "sdgh",
-            "duration": 2.0,
-            "price": 0.0
-          }
-        },
-        [
-          {
-            "type": "PlainSeat",
-            "properties": {
-              "reserved": true,
-              "table": false,
-              "positionWithinRow": 4,
-              "id": 34,
-              "price": 5.0
-            }
-          }
-        ]
-      ],
-      [
-        {
-          "type": "Movie",
-          "properties": {
-            "name": "ma2",
-            "description": "wf",
-            "actors": [
-              "sdfji",
-              ""
-            ],
-            "director": "wfgj",
-            "duration": 1.0,
-            "price": 0.0
-          }
-        },
-        [
-          {
-            "type": "LuxuriousSeat",
-            "properties": {
-              "reserved": true,
-              "table": true,
-              "positionWithinRow": 1,
-              "id": 1,
-              "price": 10.0
-            }
-          },
-          {
-            "type": "PlainSeat",
-            "properties": {
-              "reserved": true,
-              "table": false,
-              "positionWithinRow": 2,
-              "id": 2,
-              "price": 5.0
-            }
-          }
-        ]
-      ],
-      [
-        {
-          "type": "Movie",
-          "properties": {
-            "name": "ma",
-            "description": "sdg",
-            "actors": [
-              "df",
-              ""
-            ],
-            "director": "sg",
-            "duration": 3.0,
-            "price": 0.0
-          }
-        },
-        [
-          {
-            "type": "PlainSeat",
-            "properties": {
-              "reserved": true,
-              "table": false,
-              "positionWithinRow": 1,
-              "id": 1,
-              "price": 5.0
-            }
-          },
-          {
-            "type": "PlainSeat",
-            "properties": {
-              "reserved": true,
-              "table": false,
-              "positionWithinRow": 3,
-              "id": 3,
-              "price": 5.0
-            }
-          }
-        ]
-      ],
-      [
-        {
-          "type": "Movie",
-          "properties": {
-            "name": "ma2",
-            "description": "sdf",
-            "actors": [
-              "sdof",
-              ""
-            ],
-            "director": "dfh",
-            "duration": 1.0,
-            "price": 0.0
-          }
-        },
-        [
-          {
-            "type": "LuxuriousSeat",
-            "properties": {
-              "reserved": true,
-              "table": true,
-              "positionWithinRow": 1,
-              "id": 1,
-              "price": 10.0
-            }
-          },
-          {
-            "type": "PlainSeat",
-            "properties": {
-              "reserved": true,
-              "table": false,
-              "positionWithinRow": 5,
-              "id": 5,
+              "id": 58,
               "price": 5.0
             }
           }

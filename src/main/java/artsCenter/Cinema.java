@@ -23,7 +23,7 @@ public class Cinema extends Room implements Serializable {
 	@Override
 	public String toString() {
 		String description = super.toString();
-		description += " Room type : cinema";
+		description += " Room Type : Cinema";
 		return description;
 	}
 

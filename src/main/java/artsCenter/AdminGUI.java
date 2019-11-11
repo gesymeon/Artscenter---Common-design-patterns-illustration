@@ -19,21 +19,10 @@ public class AdminGUI extends JFrame {
 	public static void main(String[] args) {
 
 		Administrator admin = new Administrator();
-		try {
 
-			workspace = Artspace.getInstance();
+		workspace = Artspace.getInstance();
 
-		} catch (IOException ex) {
-
-			JOptionPane.showMessageDialog(null, "Could not read the artspace from disk", null,
-					JOptionPane.ERROR_MESSAGE, null);
-
-		} catch (ClassNotFoundException ex) {
-
-			JOptionPane.showMessageDialog(null, "Missing data from .jar file", null, JOptionPane.ERROR_MESSAGE, null);
-		} finally {
-			AdminGUI g = new AdminGUI(admin);
-		}
+		new AdminGUI(admin);
 
 	}
 
@@ -593,10 +582,10 @@ public class AdminGUI extends JFrame {
 	}
 
 	/**
-	 * Δημιουργεί το πλαίσιο (frame) του προγράμματος ενός χώρου και επιτρέπει την
-	 * τροποποίηση του.
+	 * Creates the layout of the room's schedules and provides their modification
+	 * capabilities.
 	 * 
-	 * @param room η αίθουσα της οποίας το πρόγραμμα θα τροποποιηθεί.
+	 * @param room The room whose chosen schedule will be modified.
 	 */
 
 	private void displayConfigScreen(Room room) {

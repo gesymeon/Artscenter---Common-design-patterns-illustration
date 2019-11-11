@@ -17,12 +17,6 @@ public class ScheduleEntry implements Serializable, RowsObserver {
 	// entry's structure do not affect other schedules' entries.
 	private List<Row> rows;
 
-	/*
-	 * public ScheduleEntry(float startingTime, float finishingTime) {
-	 * this.startingTime = startingTime; this.finishingTime = finishingTime; rows =
-	 * new ArrayList<>(); }
-	 */
-
 	/**
 	 * Initializes an entry with its corresponding operating time interval.
 	 * 
@@ -120,12 +114,10 @@ public class ScheduleEntry implements Serializable, RowsObserver {
 	}
 
 	public void setRows(List<Row> rows) {
-
 		if (this.rows.size() < rows.size())
 			this.rows.add(rows.get(rows.size() - 1).deepCopy());
 		else
 			this.rows.remove(this.rows.size() - 1);
-
 	}
 
 	/**
