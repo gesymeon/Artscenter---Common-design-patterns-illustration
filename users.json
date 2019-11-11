@@ -321,6 +321,148 @@
             }
           }
         ]
+      ],
+      [
+        {
+          "type": "Movie",
+          "properties": {
+            "name": "wrgj",
+            "description": "sdg",
+            "actors": [
+              "jsdf",
+              ""
+            ],
+            "director": "sdgh",
+            "duration": 2.0,
+            "price": 0.0
+          }
+        },
+        [
+          {
+            "type": "PlainSeat",
+            "properties": {
+              "reserved": true,
+              "table": false,
+              "positionWithinRow": 4,
+              "id": 34,
+              "price": 5.0
+            }
+          }
+        ]
+      ],
+      [
+        {
+          "type": "Movie",
+          "properties": {
+            "name": "ma2",
+            "description": "wf",
+            "actors": [
+              "sdfji",
+              ""
+            ],
+            "director": "wfgj",
+            "duration": 1.0,
+            "price": 0.0
+          }
+        },
+        [
+          {
+            "type": "LuxuriousSeat",
+            "properties": {
+              "reserved": true,
+              "table": true,
+              "positionWithinRow": 1,
+              "id": 1,
+              "price": 10.0
+            }
+          },
+          {
+            "type": "PlainSeat",
+            "properties": {
+              "reserved": true,
+              "table": false,
+              "positionWithinRow": 2,
+              "id": 2,
+              "price": 5.0
+            }
+          }
+        ]
+      ],
+      [
+        {
+          "type": "Movie",
+          "properties": {
+            "name": "ma",
+            "description": "sdg",
+            "actors": [
+              "df",
+              ""
+            ],
+            "director": "sg",
+            "duration": 3.0,
+            "price": 0.0
+          }
+        },
+        [
+          {
+            "type": "PlainSeat",
+            "properties": {
+              "reserved": true,
+              "table": false,
+              "positionWithinRow": 1,
+              "id": 1,
+              "price": 5.0
+            }
+          },
+          {
+            "type": "PlainSeat",
+            "properties": {
+              "reserved": true,
+              "table": false,
+              "positionWithinRow": 3,
+              "id": 3,
+              "price": 5.0
+            }
+          }
+        ]
+      ],
+      [
+        {
+          "type": "Movie",
+          "properties": {
+            "name": "ma2",
+            "description": "sdf",
+            "actors": [
+              "sdof",
+              ""
+            ],
+            "director": "dfh",
+            "duration": 1.0,
+            "price": 0.0
+          }
+        },
+        [
+          {
+            "type": "LuxuriousSeat",
+            "properties": {
+              "reserved": true,
+              "table": true,
+              "positionWithinRow": 1,
+              "id": 1,
+              "price": 10.0
+            }
+          },
+          {
+            "type": "PlainSeat",
+            "properties": {
+              "reserved": true,
+              "table": false,
+              "positionWithinRow": 5,
+              "id": 5,
+              "price": 5.0
+            }
+          }
+        ]
       ]
     ]
   }

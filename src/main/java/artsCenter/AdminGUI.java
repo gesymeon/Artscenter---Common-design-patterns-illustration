@@ -235,10 +235,7 @@ public class AdminGUI extends JFrame {
 
 					Room found = workspace.existingRoom(roomName);
 
-					int position = Integer.parseInt(JOptionPane.showInputDialog(null,
-							"Please give the index of the row to be deleted", JOptionPane.QUESTION_MESSAGE));
-
-					found.deleteRow(position);
+					found.deleteRow();
 
 				} catch (NullPointerException ex) {
 
@@ -478,7 +475,7 @@ public class AdminGUI extends JFrame {
 					JOptionPane.showMessageDialog(null,
 							"The schedule for the specific date is full or the show has already been added", null,
 							JOptionPane.INFORMATION_MESSAGE, null);
-			} catch (HeadlessException | CloneNotSupportedException e) {
+			} catch (HeadlessException e) {
 				System.out.println("toLogger");
 			}
 		} else {
@@ -543,7 +540,7 @@ public class AdminGUI extends JFrame {
 					else
 						JOptionPane.showMessageDialog(null, "There is already a schedule for the given date", null,
 								JOptionPane.INFORMATION_MESSAGE, null);
-				} catch (NullPointerException | HeadlessException | CloneNotSupportedException ex) {
+				} catch (NullPointerException | HeadlessException ex) {
 					System.out.println("toLogger");
 				}
 

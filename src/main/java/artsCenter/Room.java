@@ -22,9 +22,8 @@ public abstract class Room implements Serializable {
 	// the key is a specific date, and its value is the corresponding date's
 	// schedule.
 	protected LinkedHashMap<String, Schedule> schedules;
-	
-	private List<RowsObserver> observers;
 
+	private List<RowsObserver> observers;
 
 	/**
 	 * Creates a room with a specific name and capacity.
@@ -35,7 +34,7 @@ public abstract class Room implements Serializable {
 	 * @throws CloneNotSupportedException
 	 */
 	public Room(String name, int capacity) throws ParseException {
-		
+
 		this.name = name;
 		this.capacity = capacity;
 		observers = new ArrayList<>();
@@ -105,10 +104,6 @@ public abstract class Room implements Serializable {
 		return true;
 	}
 
-	
-
-    
-    
 	/**
 	 * adds a schedule for each of the ten following days (excluding today). By
 	 * default the schedule starts from 12 a.m up until 12 p.m
@@ -172,22 +167,16 @@ public abstract class Room implements Serializable {
 	}
 
 	/**
-	 * Deletes the row indicated by position and reduces the following rows' indices
-	 * by one. The entries already inserted on the room's schedules are not affected
-	 * by this change.
-	 * 
-	 * @param position The row's incremental number.
+	 * Deletes the last inserted row of the room.
 	 */
-	public void deleteRow(int position) {
-		if (position >= 1 && position <= rows.size()) {
-			rows.remove(position - 1);
-			for (int i = position - 1; i < rows.size(); i++) {
-				rows.get(i).setIndex(rows.get(i).getIndex() - 1);
-			}
-		}
-
+	public boolean deleteRow() {
+		if (rows.isEmpty())
+			return false;
+		int lastRowIndex = rows.size() - 1;
+		capacity -= rows.get(lastRowIndex).getCapacity();
+		rows.remove(lastRowIndex);
 		updateObservers();
-		
+		return true;
 	}
 
 	/**
@@ -239,14 +228,12 @@ public abstract class Room implements Serializable {
 			return true;
 		}
 	}
-	
-	
+
 	private void updateObservers() {
-		
-		for(RowsObserver obs : observers)
+
+		for (RowsObserver obs : observers)
 			obs.updateRows(rows);
 	}
-	
 
 	/**
 	 * Adds a new row in the room.
@@ -255,14 +242,14 @@ public abstract class Room implements Serializable {
 	 * @param lux      the new row's quality of seats
 	 */
 	public void addRow(int capacity, boolean lux) {
-
+		this.capacity += capacity;
 		if (lux)
 			rows.add(new LuxuriousRow(capacity, rows.get(rows.size() - 1).getIndex() + 1));
 		else
 			rows.add(new PlainRow(capacity, rows.get(rows.size() - 1).getIndex() + 1));
-		
+
 		updateObservers();
-		
+
 	}
 
 	/**

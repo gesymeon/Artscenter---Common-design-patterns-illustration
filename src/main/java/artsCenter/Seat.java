@@ -66,7 +66,7 @@ public abstract class Seat implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.valueOf(id);
+		return String.valueOf(positionWithinRow);
 	}
 
 	public int getID() {
