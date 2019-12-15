@@ -79,7 +79,7 @@ public class Artspace implements Serializable {
 	}
 
 	/**
-	 * Default Factory method implementation.
+	 * Default Factory method implementation. (To be overridden by possible future subclasses).
 	 * 
 	 * @param roomName     the name of the room to be inserted in the artspace.
 	 * @param roomCapacity the capacity of the room to be inserted in the artspace.

@@ -13,7 +13,7 @@ public class ScheduleEntry implements Serializable, RowsObserver {
 	private float startingTime;
 	private float finishingTime;
 
-	// Every entry contains a copy of the facility's rows, so that the changes on an
+	// Every entry contains a copy of the room's rows, so that the changes on an
 	// entry's structure do not affect other schedules' entries.
 	private List<Row> rows;
 
